@@ -21,8 +21,13 @@ function View(UI, logger, container) {
   logger.log("View.init");
   const recommendedPlantsContentId = "recommentedPlants";
 
-  function build(plants, currentPlantIds, recommentedPlants) {
+  function build(plants, currentPlantIds, recommentedPlants, consistencyErrors) {
     logger.log("View.build");
+
+    if (consistencyErrors.length > 0) {
+      UI.h1("Consistency failure, this is a critical BUG!").appendTo(container);
+      UI.div(UI.unorderedListWithItems(consistencyErrors)).appendTo(container);
+    }
 
     UI.h1("Happy Cooker").appendTo(container);
     const sideBySide = UI.div().addClass("nzc-sidebyside").appendTo(container);

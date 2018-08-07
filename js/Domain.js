@@ -18,6 +18,23 @@
  */
 
 function Domain() {
+  function consistencyCheck(plantDict) {
+    const errors = [];
+    _.each(plantDict, (plant, id) => {
+      if (plant.id !== id) {
+        errors.push(`plant.id !== id (${plant.id} !== ${id})`);
+      }
+      _.each(plant.mutations, mutation => {
+        _.each(mutation.parents, parent => {
+          if (parent.id !== "any" && !plantDict.hasOwnProperty(parent.id)) {
+            errors.push(`missing parent.id (${parent.id})`);
+          }
+        });
+      });
+    });
+    return errors;
+  }
+
   function findRecommentedPlants(plants, currentPlantIds) {
     const missingPlants = plantsExceptIds(plants, currentPlantIds);
     return mapFilter(missingPlants, plant => {
@@ -52,6 +69,7 @@ function Domain() {
   }
 
   return {
-    findRecommentedPlants: findRecommentedPlants
+    consistencyCheck: consistencyCheck
+  , findRecommentedPlants: findRecommentedPlants
   };
 }

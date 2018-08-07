@@ -29,6 +29,7 @@ function Controller(logger, store, domain, view) {
       plantList
     , currentPlantIds
     , domain.findRecommentedPlants(plantList, currentPlantIds)
+    , domain.consistencyCheck(plants)
     );
     doc.on("change", "input[type='checkbox']", onPlantCheckboxChange);
   }
@@ -49,3 +50,4 @@ function Controller(logger, store, domain, view) {
 
   return init;
 }
+
