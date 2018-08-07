@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.0.2] - 2018-08-07
+### Added
+- Plant ID and mutation parent ID consistency check.
+
+### Changed
+- Whiskerbloom's mutation parent ID was fixed.
+
 ## [0.0.1] - 2018-07-26
 ### Added
 - Plants requirements.
