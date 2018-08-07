@@ -170,7 +170,7 @@ function main() {
       { id: "whisker"
       , name: "Whiskerbloom"
       , mutations:
-        [ { parents: [ { id: "lily", count: 1 }, { id: "wchoko", count: 1 } ]
+        [ { parents: [ { id: "lily", count: 1 }, { id: "wchoco", count: 1 } ]
           , propability: .01
           }
         ]
