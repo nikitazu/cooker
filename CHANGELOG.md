@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.0.3] - 2018-08-13
+### Added
+- Script deploy.sh to upload site data.
+- Script deploy.env.sh to store sensitive settings.
+- Exclude deploy.env.sh from git to prevent accidental commit.
+- Exclude editor temporary files for vim and emacs.
+
+### Changed
+- Display plant names instead of plant IDs in "Recommended plants" section.
+
+### Removed
+- Do not show plant IDs in parenthesis after plant names.
+
 ## [0.0.2] - 2018-08-07
 ### Added
 - Plant ID and mutation parent ID consistency check.
