@@ -1,2 +1,15 @@
-*.kate-swp
+# Secrets
+#
+deploy.env.sh
 
+# End of secrets
+
+
+# Trash made by editors
+#
+*.kate-swp
+*~
+.\#*
+\#*\#
+
+# End of trash
