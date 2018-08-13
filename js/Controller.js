@@ -26,7 +26,8 @@ function Controller(logger, store, domain, view) {
     plantList = _.values(plants);
     const currentPlantIds = store.loadCurrentPlants() || ["wheat"];
     view.build(
-      plantList
+      plants
+    , plantList
     , currentPlantIds
     , domain.findRecommentedPlants(plantList, currentPlantIds)
     , domain.consistencyCheck(plants)

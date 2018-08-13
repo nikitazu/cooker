@@ -20,9 +20,17 @@
 function View(UI, logger, container) {
   logger.log("View.init");
   const recommendedPlantsContentId = "recommentedPlants";
+  let _plantDict;
 
-  function build(plants, currentPlantIds, recommentedPlants, consistencyErrors) {
+  function build(
+    plantDict
+    , plantList
+    , currentPlantIds
+    , recommentedPlants
+    , consistencyErrors
+  ) {
     logger.log("View.build");
+    _plantDict = plantDict;
 
     if (consistencyErrors.length > 0) {
       UI.h1("Consistency failure, this is a critical BUG!").appendTo(container);
@@ -33,15 +41,15 @@ function View(UI, logger, container) {
     const sideBySide = UI.div().addClass("nzc-sidebyside").appendTo(container);
 
     const left = UI.section(UI.h2("All mutations")).appendTo(sideBySide);
-    plantList(plants).appendTo(left);
+    buildPlantList(plantList).appendTo(left);
 
     const middle = UI.section("").appendTo(sideBySide);
     UI.div(UI.h2("Avaliable plants")).appendTo(middle);
     UI.unorderedListWithItems(
-      plants
+      plantList
         .map(p => UI.checkbox(p.id, p.name, _.contains(currentPlantIds, p.id)))
     ).appendTo(middle);
-    
+
     const right = UI.section("").appendTo(sideBySide);
     UI.div(UI.h2("Recommended plants")).appendTo(right);
     recommentedPlantsContent(recommentedPlants).appendTo(right);
@@ -53,21 +61,18 @@ function View(UI, logger, container) {
     $(`#${recommendedPlantsContentId}`).replaceWith(recommentedPlantsContent(plants));
   }
 
-  function recommentedPlantsContent(plants) {
-    return UI.div(plantList(plants)).attr("id", recommendedPlantsContentId);
+  function recommentedPlantsContent(plantList) {
+    return UI.div(buildPlantList(plantList))
+      .attr("id", recommendedPlantsContentId);
   }
 
-  function plantList(plants) {
+  function buildPlantList(plants) {
     const container = UI.div("");
     for (let plant of plants) {
-      UI.div(plantTitle(plant)).appendTo(container);
+      UI.div(plant.name).appendTo(container);
       buildMutationList(plant.mutations).appendTo(container);
     }
     return container;
-  }
-
-  function plantTitle(plant) {
-    return `${plant.name} (${plant.id})`;
   }
 
   function buildMutationList(mutations) {
@@ -79,9 +84,10 @@ function View(UI, logger, container) {
   }
 
   function mutationParent(p) {
-    return p.count === 1 ? p.id : `${p.id} * ${p.count}`;
+    const name = p.id === "any" ? "any" : _plantDict[p.id].name;
+    return p.count === 1 ? name : `${name} * ${p.count}`;
   }
-  
+
   return {
     build: build
   , updateRecommendedPlants: updateRecommendedPlants
