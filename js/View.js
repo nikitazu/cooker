@@ -18,6 +18,7 @@
  */
 
 import GardenersCompendiumView from "./View/GardenersCompendiumView.js";
+import HarvestedSeedsView from "./View/HarvestedSeedsView.js";
 import PlantListView from "./View/PlantListView.js";
 import RecommendedPlantsView from "./View/RecommendedPlantsView.js";
 
@@ -26,6 +27,7 @@ export default function View(UI, logger, container) {
   let _plantDict;
 
   let _gardenersCompendiumView;
+  let _harvestedSeedsView;
   let _plantListView;
   let _recommendedPlantsView;
 
@@ -40,6 +42,7 @@ export default function View(UI, logger, container) {
     _plantDict = plantDict;
     _plantListView = new PlantListView(plantDict);
     _gardenersCompendiumView = new GardenersCompendiumView(_plantListView);
+    _harvestedSeedsView = new HarvestedSeedsView();
     _recommendedPlantsView = new RecommendedPlantsView(_plantListView);
 
     if (consistencyErrors.length > 0) {
@@ -51,31 +54,14 @@ export default function View(UI, logger, container) {
     const sideBySide = UI.div().addClass("nzc-sidebyside").appendTo(container);
 
     _gardenersCompendiumView.build(plantList).appendTo(sideBySide);
-
-    const middle = UI.section("").appendTo(sideBySide);
-    UI.div(UI.h2("Harvested seeds")).appendTo(middle);
-    UI.unorderedListWithItems(
-      plantList
-        .map(p => UI.checkbox(p.id, p.name, _.contains(currentPlantIds, p.id)))
-    ).appendTo(middle);
-    UI.button("Uncheck harvested seeds")
-      .appendTo(middle)
-      .click(() =>
-        middle
-          .find("input[type='checkbox']")
-          .prop("checked", false));
-
+    _harvestedSeedsView.build(currentPlantIds, plantList).appendTo(sideBySide);
     _recommendedPlantsView.build(recommendedPlants).appendTo(sideBySide);
 
     logger.log("View.build done");
   }
 
-  function updateRecommendedPlants(plantList) {
-    _recommendedPlantsView.update(plantList);
-  }
-
   return {
     build: build
-  , updateRecommendedPlants: updateRecommendedPlants
+    , updateRecommendedPlants: x => _recommendedPlantsView.update(x)
   };
 }
