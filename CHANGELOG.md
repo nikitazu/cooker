@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Rename section "All mutations" to "Gardener's Compendium".
 - Rename section "Available plants" to "Harvested seeds".
+- Add button to "Uncheck harvested seeds".
 
 ## [0.0.3] - 2018-08-13
 ### Added

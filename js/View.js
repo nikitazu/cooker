@@ -49,6 +49,12 @@ function View(UI, logger, container) {
       plantList
         .map(p => UI.checkbox(p.id, p.name, _.contains(currentPlantIds, p.id)))
     ).appendTo(middle);
+    UI.button("Uncheck harvested seeds")
+      .appendTo(middle)
+      .click(() =>
+        middle
+          .find("input[type='checkbox']")
+          .prop("checked", false));
 
     const right = UI.section("").appendTo(sideBySide);
     UI.div(UI.h2("Recommended plants")).appendTo(right);

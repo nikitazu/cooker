@@ -52,3 +52,5 @@ UI.checkbox = (name, content, isChecked) =>
       .attr("name", name)
       .prop("checked", isChecked)
   ).append(content);
+
+UI.button = UI.elementMaker("button");
