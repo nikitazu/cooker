@@ -19,13 +19,15 @@
 
 import GardenersCompendiumView from "./View/GardenersCompendiumView.js";
 import PlantListView from "./View/PlantListView.js";
+import RecommendedPlantsView from "./View/RecommendedPlantsView.js";
 
 export default function View(UI, logger, container) {
   logger.log("View.init");
-  const recommendedPlantsContentId = "recommendedPlants";
   let _plantDict;
-  let _plantListView;
+
   let _gardenersCompendiumView;
+  let _plantListView;
+  let _recommendedPlantsView;
 
   function build(
     plantDict
@@ -38,6 +40,7 @@ export default function View(UI, logger, container) {
     _plantDict = plantDict;
     _plantListView = new PlantListView(plantDict);
     _gardenersCompendiumView = new GardenersCompendiumView(_plantListView);
+    _recommendedPlantsView = new RecommendedPlantsView(_plantListView);
 
     if (consistencyErrors.length > 0) {
       UI.h1("Consistency failure, this is a critical BUG!").appendTo(container);
@@ -62,20 +65,13 @@ export default function View(UI, logger, container) {
           .find("input[type='checkbox']")
           .prop("checked", false));
 
-    const right = UI.section("").appendTo(sideBySide);
-    UI.div(UI.h2("Recommended plants")).appendTo(right);
-    recommendedPlantsContent(recommendedPlants).appendTo(right);
+    _recommendedPlantsView.build(recommendedPlants).appendTo(sideBySide);
 
     logger.log("View.build done");
   }
 
-  function updateRecommendedPlants(plants) {
-    $(`#${recommendedPlantsContentId}`).replaceWith(recommendedPlantsContent(plants));
-  }
-
-  function recommendedPlantsContent(plantList) {
-    return UI.div(_plantListView.build(plantList))
-      .attr("id", recommendedPlantsContentId);
+  function updateRecommendedPlants(plantList) {
+    _recommendedPlantsView.update(plantList);
   }
 
   return {
