@@ -35,6 +35,7 @@ quote USER $COOKER_USER
 quote PASS $COOKER_PASS
 cd $COOKER_PATH
 put index.html
+mkdir dist
 put dist/bundle.js
 quit
 EOF
