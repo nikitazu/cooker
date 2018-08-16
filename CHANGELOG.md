@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Setup npm and generate node package.
+- Setup webpack to run ES6 modules.
+- Setup make to run webpack.
+- Setup make to run deploy.
+- Setup make to run tests in the future.
 
 ## [0.0.4] - 2018-08-16
 ### Changed
