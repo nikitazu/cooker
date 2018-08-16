@@ -17,7 +17,7 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-function Controller(logger, store, domain, view) {
+export default function Controller(logger, store, domain, view) {
   logger.log("Controller.init");
   const doc = $(document);
   let plantList = [];

@@ -17,7 +17,7 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-function View(UI, logger, container) {
+export default function View(UI, logger, container) {
   logger.log("View.init");
   const recommendedPlantsContentId = "recommendedPlants";
   let _plantDict;

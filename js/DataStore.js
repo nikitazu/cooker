@@ -17,7 +17,7 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class DataStore {
+export default class DataStore {
   constructor(storage, log) {
     this._log = log;
     this._storage = storage;

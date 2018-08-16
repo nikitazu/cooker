@@ -17,7 +17,7 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class Logger {
+export default class Logger {
   constructor(log) {
     this._log = log;
   }

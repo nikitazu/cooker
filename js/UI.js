@@ -19,6 +19,8 @@
 
 var UI = UI || {};
 
+export default UI;
+
 UI.tag = name => "<" + name + ">";
 
 UI.elementMaker = name => content => $(UI.tag(name)).append(content);

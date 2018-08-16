@@ -17,6 +17,13 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import Controller from "./Controller.js";
+import DataStore from "./DataStore.js";
+import Domain from "./Domain.js";
+import Logger from "./Logger.js";
+import View from "./View.js";
+import UI from "./UI.js";
+
 function main() {
  const windowMinWidth = 886;
   if (window.innerWidth < windowMinWidth) {
@@ -412,3 +419,4 @@ function main() {
   logger.log("init done");
 }
 
+$(() => main());

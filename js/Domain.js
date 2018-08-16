@@ -17,7 +17,7 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-function Domain() {
+export default function Domain() {
   function consistencyCheck(plantDict) {
     const errors = [];
     _.each(plantDict, (plant, id) => {

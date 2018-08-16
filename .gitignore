@@ -5,6 +5,14 @@ deploy.env.sh
 # End of secrets
 
 
+# Build artifacts
+#
+node_modules/*
+dist/*
+
+# End of build artifacts
+
+
 # Trash made by editors
 #
 *.kate-swp
@@ -13,3 +21,4 @@ deploy.env.sh
 \#*\#
 
 # End of trash
+
