@@ -17,10 +17,15 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import GardenersCompendiumView from "./View/GardenersCompendiumView.js";
+import PlantListView from "./View/PlantListView.js";
+
 export default function View(UI, logger, container) {
   logger.log("View.init");
   const recommendedPlantsContentId = "recommendedPlants";
   let _plantDict;
+  let _plantListView;
+  let _gardenersCompendiumView;
 
   function build(
     plantDict
@@ -31,6 +36,8 @@ export default function View(UI, logger, container) {
   ) {
     logger.log("View.build");
     _plantDict = plantDict;
+    _plantListView = new PlantListView(plantDict);
+    _gardenersCompendiumView = new GardenersCompendiumView(_plantListView);
 
     if (consistencyErrors.length > 0) {
       UI.h1("Consistency failure, this is a critical BUG!").appendTo(container);
@@ -40,8 +47,7 @@ export default function View(UI, logger, container) {
     UI.h1("Happy Cooker").appendTo(container);
     const sideBySide = UI.div().addClass("nzc-sidebyside").appendTo(container);
 
-    const left = UI.section(UI.h2("Gardener's Compendium")).appendTo(sideBySide);
-    buildPlantList(plantList).appendTo(left);
+    _gardenersCompendiumView.build(plantList).appendTo(sideBySide);
 
     const middle = UI.section("").appendTo(sideBySide);
     UI.div(UI.h2("Harvested seeds")).appendTo(middle);
@@ -68,30 +74,8 @@ export default function View(UI, logger, container) {
   }
 
   function recommendedPlantsContent(plantList) {
-    return UI.div(buildPlantList(plantList))
+    return UI.div(_plantListView.build(plantList))
       .attr("id", recommendedPlantsContentId);
-  }
-
-  function buildPlantList(plants) {
-    const container = UI.div("");
-    for (let plant of plants) {
-      UI.div(plant.name).appendTo(container);
-      buildMutationList(plant.mutations).appendTo(container);
-    }
-    return container;
-  }
-
-  function buildMutationList(mutations) {
-    return UI.unorderedListWithItems(mutations.map(mutation));
-  }
-
-  function mutation(m) {
-    return m.parents.map(mutationParent).join(" + ") + ` = ${m.propability}`;
-  }
-
-  function mutationParent(p) {
-    const name = p.id === "any" ? "any" : _plantDict[p.id].name;
-    return p.count === 1 ? name : `${name} * ${p.count}`;
   }
 
   return {
@@ -99,4 +83,3 @@ export default function View(UI, logger, container) {
   , updateRecommendedPlants: updateRecommendedPlants
   };
 }
-
