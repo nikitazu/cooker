@@ -40,11 +40,11 @@ function View(UI, logger, container) {
     UI.h1("Happy Cooker").appendTo(container);
     const sideBySide = UI.div().addClass("nzc-sidebyside").appendTo(container);
 
-    const left = UI.section(UI.h2("All mutations")).appendTo(sideBySide);
+    const left = UI.section(UI.h2("Gardener's Compendium")).appendTo(sideBySide);
     buildPlantList(plantList).appendTo(left);
 
     const middle = UI.section("").appendTo(sideBySide);
-    UI.div(UI.h2("Avaliable plants")).appendTo(middle);
+    UI.div(UI.h2("Harvested seeds")).appendTo(middle);
     UI.unorderedListWithItems(
       plantList
         .map(p => UI.checkbox(p.id, p.name, _.contains(currentPlantIds, p.id)))

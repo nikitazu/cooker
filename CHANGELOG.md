@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Rename section "All mutations" to "Gardener's Compendium".
+- Rename section "Available plants" to "Harvested seeds".
 
 ## [0.0.3] - 2018-08-13
 ### Added
