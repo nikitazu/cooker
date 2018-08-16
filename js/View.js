@@ -19,14 +19,14 @@
 
 function View(UI, logger, container) {
   logger.log("View.init");
-  const recommendedPlantsContentId = "recommentedPlants";
+  const recommendedPlantsContentId = "recommendedPlants";
   let _plantDict;
 
   function build(
     plantDict
     , plantList
     , currentPlantIds
-    , recommentedPlants
+    , recommendedPlants
     , consistencyErrors
   ) {
     logger.log("View.build");
@@ -58,16 +58,16 @@ function View(UI, logger, container) {
 
     const right = UI.section("").appendTo(sideBySide);
     UI.div(UI.h2("Recommended plants")).appendTo(right);
-    recommentedPlantsContent(recommentedPlants).appendTo(right);
+    recommendedPlantsContent(recommendedPlants).appendTo(right);
 
     logger.log("View.build done");
   }
 
   function updateRecommendedPlants(plants) {
-    $(`#${recommendedPlantsContentId}`).replaceWith(recommentedPlantsContent(plants));
+    $(`#${recommendedPlantsContentId}`).replaceWith(recommendedPlantsContent(plants));
   }
 
-  function recommentedPlantsContent(plantList) {
+  function recommendedPlantsContent(plantList) {
     return UI.div(buildPlantList(plantList))
       .attr("id", recommendedPlantsContentId);
   }
