@@ -1,0 +1,25 @@
+{
+  "name": "cooker",
+  "version": "0.0.4",
+  "description": "The Cooker Project",
+  "main": "js/Main.js",
+  "scripts": {
+    "test": "echo OK"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikitazu/cooker.git"
+  },
+  "keywords": [
+    "cooker",
+    "cookie",
+    "cookies",
+    "clicker"
+  ],
+  "author": "Nikita B. Zuev <nikitazu@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nikitazu/cooker/issues"
+  },
+  "homepage": "https://github.com/nikitazu/cooker#readme"
+}
