@@ -13,14 +13,18 @@ again: clean dev
 # Real targets
 # ------------
 
+
 deploy: prod
 	./deploy.sh
 
-dev:
-	npx webpack --mode development
-
 prod:
 	npx webpack --mode production
+
+test:
+	npm test
+
+dev:
+	npx webpack --mode development
 
 clean:
 	rm -rf dist

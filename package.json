@@ -4,7 +4,7 @@
   "description": "The Cooker Project",
   "main": "js/Main.js",
   "scripts": {
-    "test": "echo OK"
+    "test": "echo Test not setup && exit 1"
   },
   "repository": {
     "type": "git",
