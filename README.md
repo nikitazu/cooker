@@ -7,6 +7,11 @@ The "Cookie Clicker" game could be found at http://orteil.dashnet.org/cookieclic
 The data about propabilities and requirements are taken from the "Cookie Clicker Wiki", located at http://cookieclicker.wikia.com/wiki/Cookie_Clicker_Wiki
 
 
+### Code quality
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/3b1b6865782ea69a593f/maintainability)](https://codeclimate.com/github/nikitazu/cooker/maintainability)
+
+
 ### Requirements to run this software
 
 - EcmaScript 6 compatible browser (not included)
