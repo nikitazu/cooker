@@ -34,8 +34,7 @@ function main() {
     throw Error(windowMinWidthError);
   }
 
-  const logger = new Logger($("#log"));
-  logger.log("init");
+  const logger     = new Logger($("#log"));
   const controller = new Controller(
     logger
     , new DataStore(localStorage, logger)
@@ -43,7 +42,6 @@ function main() {
     , View(UI, logger, app)
   );
   controller.init(ConstantData.plantDict);
-  logger.log("init done");
 }
 
 $(() => main());
