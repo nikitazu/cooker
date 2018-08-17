@@ -46,7 +46,7 @@ export default class Controller {
     );
   }
 
-  _onPlantCheckboxChange(event) {
+  _onPlantCheckboxChange() {
     this._logger.log("Controller.onPlantCheckboxChange");
     const currentPlantIds = this._getCurrentPlantIds();
     this._view.update(

@@ -44,7 +44,7 @@ export default class View {
 
     if (consistencyErrors.length > 0) {
       this._add(this._ui.h1("Consistency failure, this is a critical error!"));
-      this._add(this._ui.div(this._ui.unorderedListWithItems(consistencyErrors)));;
+      this._add(this._ui.div(this._ui.unorderedListWithItems(consistencyErrors)));
     }
 
     this._add(this._ui.h1("Happy Cooker"));

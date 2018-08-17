@@ -43,7 +43,7 @@ export default class Domain {
       const mutations = plant.mutations.filter(m => this._isMutationPossible(m, currentPlantIds));
       return mutations.length > 0
         ? { id: plant.id, name: plant.name, mutations: mutations }
-      : false;
+        : false;
     });
   }
 
