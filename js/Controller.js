@@ -32,8 +32,7 @@ export default class Controller {
     this._plantList = _.values(plantDict);
     const currentPlantIds = this._store.loadCurrentPlants() || ["wheat"];
     this._view.build(
-      plantDict
-      , this._plantList
+      this._plantList
       , currentPlantIds
       , this._domain.findRecommentedPlants(this._plantList, currentPlantIds)
       , this._domain.consistencyCheck(plantDict)
@@ -41,15 +40,14 @@ export default class Controller {
     this._doc.on(
       "change"
       , "input[type='checkbox']"
-      , e => this._onPlantCheckboxChange(e)
+      , _.bind(this._onPlantCheckboxChange, this)
     );
   }
 
   _onPlantCheckboxChange(event) {
     this._logger.log("Controller.onPlantCheckboxChange");
     const currentPlantIds = this._getCurrentPlantIds();
-    this._logger.log("Controller.onPlantCheckboxChange " + currentPlantIds.join());
-    this._view.updateRecommendedPlants(
+    this._view.update(
       this._domain.findRecommentedPlants(this._plantList, currentPlantIds)
     );
     this._store.saveCurrentPlants(currentPlantIds);

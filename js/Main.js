@@ -39,7 +39,7 @@ function main() {
     logger
     , new DataStore(localStorage, logger)
     , new Domain()
-    , View(UI, logger, app)
+    , new View(UI, logger, app)
   );
   controller.init(ConstantData.plantDict);
 }

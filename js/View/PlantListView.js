@@ -17,13 +17,10 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import * as ConstantData from "../ConstantData.js";
 import UI from "../UI.js";
 
 export default class PlantListView {
-  constructor(plantDict) {
-    this._plantDict = plantDict;
-  }
-
   build(plantList) {
     const container = UI.div("");
     for (let plant of plantList) {
@@ -34,17 +31,19 @@ export default class PlantListView {
   }
 
   _buildMutationList(mutationList) {
-    return UI.unorderedListWithItems(mutationList.map(m => this._mutation(m)));
+    return UI.unorderedListWithItems(
+      mutationList.map(_.bind(this._mutation, this))
+    );
   }
 
   _mutation(m) {
     return m.parents
-      .map(p => this._mutationParent(p))
+      .map(_.bind(this._mutationParent, this))
       .join(" + ") + ` = ${m.propability}`;
   }
 
   _mutationParent(p) {
-    const name = p.id === "any" ? "any" : this._plantDict[p.id].name;
+    const name = p.id === "any" ? "any" : ConstantData.plantDict[p.id].name;
     return p.count === 1 ? name : `${name} * ${p.count}`;
   }
 }

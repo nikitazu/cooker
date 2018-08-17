@@ -22,46 +22,45 @@ import HarvestedSeedsView from "./View/HarvestedSeedsView.js";
 import PlantListView from "./View/PlantListView.js";
 import RecommendedPlantsView from "./View/RecommendedPlantsView.js";
 
-export default function View(UI, logger, container) {
-  logger.log("View.init");
-  let _plantDict;
+export default class View {
+  constructor(UI, logger, container) {
+    logger.log("View.init");
+    this._ui = UI;
+    this._logger = logger;
+    this._container = container;
+    const plantListView = new PlantListView();
+    this._gardenersCompendiumView = new GardenersCompendiumView(plantListView);
+    this._harvestedSeedsView = new HarvestedSeedsView();
+    this._recommendedPlantsView = new RecommendedPlantsView(plantListView);
+  }
 
-  let _gardenersCompendiumView;
-  let _harvestedSeedsView;
-  let _plantListView;
-  let _recommendedPlantsView;
-
-  function build(
-    plantDict
-    , plantList
+  build(
+    plantList
     , currentPlantIds
     , recommendedPlants
     , consistencyErrors
   ) {
-    logger.log("View.build");
-    _plantDict = plantDict;
-    _plantListView = new PlantListView(plantDict);
-    _gardenersCompendiumView = new GardenersCompendiumView(_plantListView);
-    _harvestedSeedsView = new HarvestedSeedsView();
-    _recommendedPlantsView = new RecommendedPlantsView(_plantListView);
+    this._logger.log("View.build");
 
     if (consistencyErrors.length > 0) {
-      UI.h1("Consistency failure, this is a critical BUG!").appendTo(container);
-      UI.div(UI.unorderedListWithItems(consistencyErrors)).appendTo(container);
+      this._add(this._ui.h1("Consistency failure, this is a critical error!"));
+      this._add(this._ui.div(this._ui.unorderedListWithItems(consistencyErrors)));;
     }
 
-    UI.h1("Happy Cooker").appendTo(container);
-    const sideBySide = UI.div().addClass("nzc-sidebyside").appendTo(container);
+    this._add(this._ui.h1("Happy Cooker"));
+    this._add(this._ui.div().addClass("nzc-sidebyside"))
+      .append(this._gardenersCompendiumView.build(plantList))
+      .append(this._harvestedSeedsView.build(currentPlantIds, plantList))
+      .append(this._recommendedPlantsView.build(recommendedPlants));
 
-    _gardenersCompendiumView.build(plantList).appendTo(sideBySide);
-    _harvestedSeedsView.build(currentPlantIds, plantList).appendTo(sideBySide);
-    _recommendedPlantsView.build(recommendedPlants).appendTo(sideBySide);
-
-    logger.log("View.build done");
+    this._logger.log("View.build done");
   }
 
-  return {
-    build: build
-    , updateRecommendedPlants: x => _recommendedPlantsView.update(x)
-  };
+  update(recommendedPlants) {
+    this._recommendedPlantsView.update(recommendedPlants);
+  }
+
+  _add(element) {
+    return element.appendTo(this._container);
+  }
 }
