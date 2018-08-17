@@ -17,16 +17,18 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-export default function Domain() {
-  function consistencyCheck(plantDict) {
+import * as ConstantData from "./ConstantData.js";
+
+export default class Domain {
+  consistencyCheck() {
     const errors = [];
-    _.each(plantDict, (plant, id) => {
+    _.each(ConstantData.plantDict, (plant, id) => {
       if (plant.id !== id) {
         errors.push(`plant.id !== id (${plant.id} !== ${id})`);
       }
       _.each(plant.mutations, mutation => {
         _.each(mutation.parents, parent => {
-          if (parent.id !== "any" && !plantDict.hasOwnProperty(parent.id)) {
+          if (parent.id !== "any" && !ConstantData.plantDict.hasOwnProperty(parent.id)) {
             errors.push(`missing parent.id (${parent.id})`);
           }
         });
@@ -35,29 +37,29 @@ export default function Domain() {
     return errors;
   }
 
-  function findRecommentedPlants(plants, currentPlantIds) {
-    const missingPlants = plantsExceptIds(plants, currentPlantIds);
-    return mapFilter(missingPlants, plant => {
-      const mutations = plant.mutations.filter(m => isMutationPossible(m, currentPlantIds));
-        return mutations.length > 0
+  findRecommentedPlants(plants, currentPlantIds) {
+    const missingPlants = this._plantsExceptIds(plants, currentPlantIds);
+    return this._mapFilter(missingPlants, plant => {
+      const mutations = plant.mutations.filter(m => this._isMutationPossible(m, currentPlantIds));
+      return mutations.length > 0
         ? { id: plant.id, name: plant.name, mutations: mutations }
-        : false;
+      : false;
     });
   }
 
-  function plantsExceptIds(plants, ids) {
-    return plants.filter(plant => !isGrownPlant(ids, plant));
+  _plantsExceptIds(plants, ids) {
+    return plants.filter(plant => !this._isGrownPlant(ids, plant));
   }
 
-  function isGrownPlant(grownIds, plant) {
+  _isGrownPlant(grownIds, plant) {
     return _.contains(grownIds, plant.id);
   }
 
-  function isMutationPossible(mutation, avaliablePlantIds) {
+  _isMutationPossible(mutation, avaliablePlantIds) {
     return mutation.parents.every(p => _.contains(avaliablePlantIds, p.id));
   }
 
-  function mapFilter(list, func) {
+  _mapFilter(list, func) {
     const result = [];
     for (let x of list) {
       const tmp = func(x);
@@ -67,9 +69,4 @@ export default function Domain() {
     }
     return result;
   }
-
-  return {
-    consistencyCheck: consistencyCheck
-  , findRecommentedPlants: findRecommentedPlants
-  };
 }

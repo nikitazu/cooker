@@ -17,7 +17,6 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import * as ConstantData from "./ConstantData.js";
 import Controller from "./Controller.js";
 import DataStore from "./DataStore.js";
 import Domain from "./Domain.js";
@@ -41,7 +40,7 @@ function main() {
     , new Domain()
     , new View(UI, logger, app)
   );
-  controller.init(ConstantData.plantDict);
+  controller.init();
 }
 
 $(() => main());

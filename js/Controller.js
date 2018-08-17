@@ -17,6 +17,8 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import * as ConstantData from "./ConstantData.js";
+
 export default class Controller {
   constructor(logger, store, domain, view) {
     logger.log("Controller.init");
@@ -28,14 +30,14 @@ export default class Controller {
     this._plantList = [];
   }
 
-  init(plantDict) {
-    this._plantList = _.values(plantDict);
+  init() {
+    this._plantList = _.values(ConstantData.plantDict);
     const currentPlantIds = this._store.loadCurrentPlants() || ["wheat"];
     this._view.build(
       this._plantList
       , currentPlantIds
       , this._domain.findRecommentedPlants(this._plantList, currentPlantIds)
-      , this._domain.consistencyCheck(plantDict)
+      , this._domain.consistencyCheck()
     );
     this._doc.on(
       "change"
