@@ -17,38 +17,50 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-export default function Controller(logger, store, domain, view) {
-  logger.log("Controller.init");
-  const doc = $(document);
-  let plantList = [];
-
-  function init(plants) {
-    plantList = _.values(plants);
-    const currentPlantIds = store.loadCurrentPlants() || ["wheat"];
-    view.build(
-      plants
-    , plantList
-    , currentPlantIds
-    , domain.findRecommentedPlants(plantList, currentPlantIds)
-    , domain.consistencyCheck(plants)
-    );
-    doc.on("change", "input[type='checkbox']", onPlantCheckboxChange);
+export default class Controller {
+  constructor(logger, store, domain, view) {
+    logger.log("Controller.init");
+    this._logger    = logger;
+    this._store     = store;
+    this._domain    = domain;
+    this._view      = view;
+    this._doc       = $(document);
+    this._plantList = [];
   }
 
-  function onPlantCheckboxChange(event) {
-    logger.log("Controller.onPlantCheckboxChange");
-    const currentPlantIds = doc
+  init(plantDict) {
+    this._plantList = _.values(plantDict);
+    const currentPlantIds = this._store.loadCurrentPlants() || ["wheat"];
+    this._view.build(
+      plantDict
+      , this._plantList
+      , currentPlantIds
+      , this._domain.findRecommentedPlants(this._plantList, currentPlantIds)
+      , this._domain.consistencyCheck(plantDict)
+    );
+    this._doc.on(
+      "change"
+      , "input[type='checkbox']"
+      , e => this._onPlantCheckboxChange(e)
+    );
+  }
+
+  _onPlantCheckboxChange(event) {
+    this._logger.log("Controller.onPlantCheckboxChange");
+    const currentPlantIds = this._getCurrentPlantIds();
+    this._logger.log("Controller.onPlantCheckboxChange " + currentPlantIds.join());
+    this._view.updateRecommendedPlants(
+      this._domain.findRecommentedPlants(this._plantList, currentPlantIds)
+    );
+    this._store.saveCurrentPlants(currentPlantIds);
+  }
+
+  _getCurrentPlantIds() {
+    return this._doc
       .find("input[type='checkbox']")
       .toArray()
       .filter(cb => $(cb).is(":checked"))
       .map(cb => $(cb).attr("name"));
-    logger.log("Controller.onPlantCheckboxChange " + currentPlantIds.join());
-    view.updateRecommendedPlants(
-      domain.findRecommentedPlants(plantList, currentPlantIds)
-    );
-    store.saveCurrentPlants(currentPlantIds);
   }
-
-  return init;
 }
 

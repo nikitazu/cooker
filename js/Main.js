@@ -26,22 +26,23 @@ import View from "./View.js";
 import UI from "./UI.js";
 
 function main() {
+  const app = $("#app");
   const windowMinWidth = 886;
   if (window.innerWidth < windowMinWidth) {
     const windowMinWidthError = `Your screen is too tight (${window.innerWidth} px), make it at least ${windowMinWidth} px in width, and refresh the page.`;
-    $("#app").append(windowMinWidthError);
+    app.append(windowMinWidthError);
     throw Error(windowMinWidthError);
   }
 
   const logger = new Logger($("#log"));
   logger.log("init");
-  const initController = Controller(
+  const controller = new Controller(
     logger
     , new DataStore(localStorage, logger)
     , new Domain()
-    , View(UI, logger, $("#app"))
+    , View(UI, logger, app)
   );
-  initController(ConstantData.plantDict);
+  controller.init(ConstantData.plantDict);
   logger.log("init done");
 }
 
