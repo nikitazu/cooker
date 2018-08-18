@@ -17,28 +17,14 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// DEV & PROD Configuration
-// ========================
+import assert from "assert";
+import m from "mocha";
 
-const path = require("path");
-const config = {
-  context: path.join(__dirname, "js"),
-  entry: "./Main.js",
-  output: {
-    path: path.join(__dirname, "dist"),
-    filename: "bundle.js"
-  },
-  devtool: "inline-source-map",
-  module: {
-    rules: [
-      { test: /\.js$/,
-        exclude: /node_modules|ConstantData.js/,
-        loader: "eslint-loader", // https://eslint.org/docs/rules/
-        enforce: "pre",
-        options: { emitError: true }
-      }
-    ]
-  }
-};
+m.describe("Mocha", function() {
+  m.describe("#it()", function() {
+    m.it("should work", function() {
+      assert.equal("ok", "ok");
+    });
+  });
+});
 
-module.exports = config;

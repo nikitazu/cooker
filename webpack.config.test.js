@@ -17,16 +17,16 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// DEV & PROD Configuration
-// ========================
+// TEST Configuration
+// ==================
 
 const path = require("path");
 const config = {
   context: path.join(__dirname, "js"),
-  entry: "./Main.js",
+  entry: "./test/test.js",
   output: {
     path: path.join(__dirname, "dist"),
-    filename: "bundle.js"
+    filename: "bundle.test.js"
   },
   devtool: "inline-source-map",
   module: {
@@ -38,7 +38,10 @@ const config = {
         options: { emitError: true }
       }
     ]
-  }
+  },
+  node: {       // This is a workaround for bug in webpack
+    fs: "empty" // related to mocha using 'fs' module
+  }             // see: https://github.com/webpack-contrib/css-loader/issues/447
 };
 
 module.exports = config;

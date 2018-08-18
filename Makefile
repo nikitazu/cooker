@@ -5,6 +5,8 @@
 # Meta targets
 # ------------
 
+.PHONY: default again deploy prod test dev clean
+
 default: dev
 
 again: clean dev
@@ -21,6 +23,7 @@ prod:
 	npx webpack --mode production
 
 test:
+	npx webpack --mode development --config webpack.config.test.js
 	npm test
 
 dev:
