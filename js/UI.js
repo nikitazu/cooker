@@ -29,6 +29,8 @@ UI.div = UI.elementMaker("div");
 
 UI.span = UI.elementMaker("span");
 
+UI.img = UI.elementMaker("img");
+
 UI.section = UI.elementMaker("section");
 
 UI.h1 = UI.elementMaker("h1");

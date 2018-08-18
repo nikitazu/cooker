@@ -19,8 +19,11 @@
 
 import GardenersCompendiumView from "./View/GardenersCompendiumView.js";
 import HarvestedSeedsView from "./View/HarvestedSeedsView.js";
+import MutationListView from "./View/MutationListView.js";
+import PlantView from "./View/PlantView.js";
 import PlantListView from "./View/PlantListView.js";
 import RecommendedPlantsView from "./View/RecommendedPlantsView.js";
+import SeedImageView from "./View/SeedImageView.js";
 
 export default class View {
   constructor(UI, logger, container) {
@@ -28,9 +31,14 @@ export default class View {
     this._ui = UI;
     this._logger = logger;
     this._container = container;
-    const plantListView = new PlantListView();
+    const seedImageView = new SeedImageView();
+    const plantView = new PlantView(seedImageView);
+    const plantListView = new PlantListView(
+      plantView
+      , new MutationListView()
+    );
     this._gardenersCompendiumView = new GardenersCompendiumView(plantListView);
-    this._harvestedSeedsView = new HarvestedSeedsView();
+    this._harvestedSeedsView = new HarvestedSeedsView(plantView);
     this._recommendedPlantsView = new RecommendedPlantsView(plantListView);
   }
 

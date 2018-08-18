@@ -21,6 +21,10 @@ import _ from "../libad/Underscore.js";
 import UI from "../UI.js";
 
 export default class HarvestedSeedsView {
+  constructor(plantView) {
+    this._plantView = plantView;
+  }
+
   build(currentPlantIds, plantList) {
     const header  = UI.h2("Harvested seeds");
     const section = UI.section("").addClass("nzg-harvested-seeds__list");
@@ -40,13 +44,9 @@ export default class HarvestedSeedsView {
   }
 
   _buildCheckbox(currentPlantIds, plant) {
-    const seedUrl = encodeURI(this._getSeedUrl(plant));
-    const seedImg = $("<img>").attr("src", seedUrl);
-    const nameSpan = $("<span>").text(plant.name);
-    const content = $().add(seedImg).add(nameSpan);
     return UI.checkbox(
       plant.id
-      , content
+      , this._plantView.build(plant)
       , _.contains(currentPlantIds, plant.id)
     ).addClass("nzg-harvested-seeds__item");
   }
@@ -59,10 +59,5 @@ export default class HarvestedSeedsView {
 
   _uncheckHarvestedSeeds(section) {
     section.find("input[type='checkbox']").prop("checked", false);
-  }
-
-  _getSeedUrl(plant) {
-    const name = plant.name.replace(" ", "_");
-    return `img/seed/${name}.m.png`;
   }
 }

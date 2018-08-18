@@ -17,20 +17,25 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import _ from "../libad/Underscore.js";
+import * as ConstantData from "../ConstantData.js";
 import UI from "../UI.js";
 
-export default class PlantListView {
-  constructor(plantListView, mutationListView) {
-    this._plantListView = plantListView;
-    this._mutationListView = mutationListView;
+export default class MutationListView {
+  build(mutationList) {
+    return UI.unorderedListWithItems(
+      mutationList.map(_.bind(this._mutation, this))
+    );
   }
 
-  build(plantList) {
-    const container = UI.div("");
-    for (let plant of plantList) {
-      this._plantListView.build(plant).appendTo(container);
-      this._mutationListView.build(plant.mutations).appendTo(container);
-    }
-    return container;
+  _mutation(m) {
+    return m.parents
+      .map(_.bind(this._mutationParent, this))
+      .join(" + ") + ` = ${m.propability}`;
+  }
+
+  _mutationParent(p) {
+    const name = p.id === "any" ? "any" : ConstantData.plantDict[p.id].name;
+    return p.count === 1 ? name : `${name} * ${p.count}`;
   }
 }

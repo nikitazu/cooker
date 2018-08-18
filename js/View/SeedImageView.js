@@ -19,18 +19,16 @@
 
 import UI from "../UI.js";
 
-export default class PlantListView {
-  constructor(plantListView, mutationListView) {
-    this._plantListView = plantListView;
-    this._mutationListView = mutationListView;
+export default class SeedImageView {
+  build(plant) {
+    const url = this._getSeedUrl(plant);
+    return UI.img()
+      .attr("src", encodeURI(url))
+      .addClass("nzg-plant__image");
   }
 
-  build(plantList) {
-    const container = UI.div("");
-    for (let plant of plantList) {
-      this._plantListView.build(plant).appendTo(container);
-      this._mutationListView.build(plant.mutations).appendTo(container);
-    }
-    return container;
+  _getSeedUrl(plant) {
+    const name = plant.name.replace(" ", "_");
+    return `img/seed/${name}.m.png`;
   }
 }

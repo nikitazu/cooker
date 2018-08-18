@@ -19,18 +19,15 @@
 
 import UI from "../UI.js";
 
-export default class PlantListView {
-  constructor(plantListView, mutationListView) {
-    this._plantListView = plantListView;
-    this._mutationListView = mutationListView;
+export default class PlantView {
+  constructor(seedImageView) {
+    this._seedImageView = seedImageView;
   }
 
-  build(plantList) {
-    const container = UI.div("");
-    for (let plant of plantList) {
-      this._plantListView.build(plant).appendTo(container);
-      this._mutationListView.build(plant.mutations).appendTo(container);
-    }
-    return container;
+  build(plant) {
+    return UI.div("")
+      .addClass("nzg-plant")
+      .append(this._seedImageView.build(plant))
+      .append(UI.span(plant.name));
   }
 }
