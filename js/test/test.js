@@ -19,6 +19,7 @@
 
 import assert from "assert";
 import m from "mocha";
+import * as ConstantData from "../ConstantData.js";
 import Domain from "../Domain.js";
 
 m.describe("Mocha", function() {
@@ -33,7 +34,33 @@ m.describe("Domain", () => {
   const domain = new Domain();
   m.describe("#consistencyCheck()", () => {
     m.it("should pass", () => {
-      assert.equal(0, domain.consistencyCheck().length);
+      assert.equal(domain.consistencyCheck().length, 0);
+    });
+  });
+
+  m.describe("#findRecommentedPlants(currentPlantIds)", () => {
+    m.it("should find plants and filter mutations", () => {
+      const corn = ConstantData.plantDict["corn"];
+      const berry = ConstantData.plantDict["berry"];
+      const expectedCorn = {
+        id: corn.id
+        , name: corn.name
+        , mutations: [
+          corn.mutations[0]
+        ]
+      };
+      const expectedBerry = {
+        id: berry.id
+        , name: berry.name
+        , mutations: [
+          berry.mutations[0]
+        ]
+      };
+      const result = domain.findRecommentedPlants(["wheat"]);
+      assert.equal(
+        JSON.stringify(result)
+        , JSON.stringify([expectedCorn, expectedBerry])
+      );
     });
   });
 });

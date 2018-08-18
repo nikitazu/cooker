@@ -38,26 +38,33 @@ export default class Domain {
     return errors;
   }
 
-  findRecommentedPlants(plants, currentPlantIds) {
-    const missingPlants = this._plantsExceptIds(plants, currentPlantIds);
+  findRecommentedPlants(currentPlantIds) {
+    const missingPlants = this._plantsExceptIds(currentPlantIds);
     return this._mapFilter(missingPlants, plant => {
-      const mutations = plant.mutations.filter(m => this._isMutationPossible(m, currentPlantIds));
+      const mutations = this._getPossibleMutations(currentPlantIds, plant);
       return mutations.length > 0
         ? { id: plant.id, name: plant.name, mutations: mutations }
         : false;
     });
   }
 
-  _plantsExceptIds(plants, ids) {
-    return plants.filter(plant => !this._isGrownPlant(ids, plant));
+  _plantsExceptIds(ids) {
+    const plants = _.values(ConstantData.plantDict);
+    return _.reject(plants, _.bind(this._isGrownPlant, this, ids));
   }
 
   _isGrownPlant(grownIds, plant) {
     return _.contains(grownIds, plant.id);
   }
 
-  _isMutationPossible(mutation, avaliablePlantIds) {
-    return mutation.parents.every(p => _.contains(avaliablePlantIds, p.id));
+  _getPossibleMutations(currentPlantIds, plant) {
+    return plant
+      .mutations
+      .filter(_.bind(this._isMutationPossible, this, currentPlantIds));
+  }
+
+  _isMutationPossible(currentPlantIds, mutation) {
+    return mutation.parents.every(p => _.contains(currentPlantIds, p.id));
   }
 
   _mapFilter(list, func) {

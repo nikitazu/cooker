@@ -28,16 +28,14 @@ export default class Controller {
     this._domain    = domain;
     this._view      = view;
     this._doc       = $(document);
-    this._plantList = [];
   }
 
   init() {
-    this._plantList = _.values(ConstantData.plantDict);
     const currentPlantIds = this._store.loadCurrentPlants() || ["wheat"];
     this._view.build(
-      this._plantList
+      _.values(ConstantData.plantDict)
       , currentPlantIds
-      , this._domain.findRecommentedPlants(this._plantList, currentPlantIds)
+      , this._domain.findRecommentedPlants(currentPlantIds)
       , this._domain.consistencyCheck()
     );
     this._doc.on(
@@ -51,7 +49,7 @@ export default class Controller {
     this._logger.log("Controller.onPlantCheckboxChange");
     const currentPlantIds = this._getCurrentPlantIds();
     this._view.update(
-      this._domain.findRecommentedPlants(this._plantList, currentPlantIds)
+      this._domain.findRecommentedPlants(currentPlantIds)
     );
     this._store.saveCurrentPlants(currentPlantIds);
   }
