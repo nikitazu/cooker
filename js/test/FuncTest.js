@@ -19,13 +19,13 @@
 
 import assert from "assert";
 import m from "mocha";
-import "./FuncTest.js";
-import "./DomainTest.js";
+import * as Func from "../Func.js";
 
-m.describe("Mocha", function() {
-  m.describe("#it()", function() {
-    m.it("should work", function() {
-      assert.equal("ok", "ok");
+m.describe("Func", () => {
+  m.describe("#mapFilter(xs, f)", () => {
+    m.it("should map not false results", () => {
+      const result = Func.mapFilter([1, 2, 3], n => n % 2 !== 0 ? n : false);
+      assert.equal(JSON.stringify(result), JSON.stringify([1, 3]));
     });
   });
 });

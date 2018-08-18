@@ -19,6 +19,7 @@
 
 import _ from "./libad/Underscore.js";
 import * as ConstantData from "./ConstantData.js";
+import * as Func from "./Func.js";
 
 export default class Domain {
   consistencyCheck() {
@@ -40,7 +41,7 @@ export default class Domain {
 
   findRecommentedPlants(currentPlantIds) {
     const missingPlants = this._plantsExceptIds(currentPlantIds);
-    return this._mapFilter(missingPlants, plant => {
+    return Func.mapFilter(missingPlants, plant => {
       const mutations = this._getPossibleMutations(currentPlantIds, plant);
       return mutations.length > 0
         ? { id: plant.id, name: plant.name, mutations: mutations }
@@ -65,16 +66,5 @@ export default class Domain {
 
   _isMutationPossible(currentPlantIds, mutation) {
     return mutation.parents.every(p => _.contains(currentPlantIds, p.id));
-  }
-
-  _mapFilter(list, func) {
-    const result = [];
-    for (let x of list) {
-      const tmp = func(x);
-      if (tmp) {
-        result.push(tmp);
-      }
-    }
-    return result;
   }
 }

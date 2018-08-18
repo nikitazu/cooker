@@ -17,15 +17,13 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import assert from "assert";
-import m from "mocha";
-import "./FuncTest.js";
-import "./DomainTest.js";
-
-m.describe("Mocha", function() {
-  m.describe("#it()", function() {
-    m.it("should work", function() {
-      assert.equal("ok", "ok");
-    });
-  });
-});
+export function mapFilter(list, func) {
+  const result = [];
+  for (let x of list) {
+    const tmp = func(x);
+    if (tmp) {
+      result.push(tmp);
+    }
+  }
+  return result;
+}
