@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.0.7] -2018-08-18
+- Unit tests.
+- Lots of refactoring.
+- CodeClimante's "A" status achieved.
+
 ## [0.0.6] - 2018-08-16
 ### Changed
 - [FIX] deploy script creates dist directory before uploading bundle.js.
