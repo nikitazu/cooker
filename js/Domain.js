@@ -27,13 +27,13 @@ export default class Domain {
       if (plant.id !== id) {
         errors.push(`plant.id !== id (${plant.id} !== ${id})`);
       }
-      _.each(plant.mutations, mutation => {
-        _.each(mutation.parents, parent => {
+      for (let mutation of plant.mutations) {
+        for (let parent of mutation.parents) {
           if (parent.id !== "any" && !ConstantData.plantDict.hasOwnProperty(parent.id)) {
             errors.push(`missing parent.id (${parent.id})`);
           }
-        });
-      });
+        }
+      }
     });
     return errors;
   }

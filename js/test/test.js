@@ -34,7 +34,10 @@ m.describe("Domain", () => {
   const domain = new Domain();
   m.describe("#consistencyCheck()", () => {
     m.it("should pass", () => {
-      assert.equal(domain.consistencyCheck().length, 0);
+      assert.equal(
+        JSON.stringify(domain.consistencyCheck())
+        , JSON.stringify([])
+      );
     });
   });
 
