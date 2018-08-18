@@ -32,7 +32,7 @@ const config = {
   module: {
     rules: [
       { test: /\.js$/,
-        exclude: /node_modules|ConstantData.js/,
+        exclude: /node_modules|(lib\/.*)|ConstantData.js/,
         loader: "eslint-loader", // https://eslint.org/docs/rules/
         enforce: "pre",
         options: { emitError: true }

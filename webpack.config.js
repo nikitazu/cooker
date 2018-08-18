@@ -28,11 +28,14 @@ const config = {
     path: path.join(__dirname, "dist"),
     filename: "bundle.js"
   },
+  externals: {
+    "underscore-min-1.9.1.js": "_"
+  },
   devtool: "inline-source-map",
   module: {
     rules: [
       { test: /\.js$/,
-        exclude: /node_modules|ConstantData.js/,
+        exclude: /node_modules|(lib\/.*)|ConstantData.js/,
         loader: "eslint-loader", // https://eslint.org/docs/rules/
         enforce: "pre",
         options: { emitError: true }

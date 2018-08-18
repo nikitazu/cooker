@@ -17,6 +17,7 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import _ from "../libad/Underscore.js";
 import * as ConstantData from "../ConstantData.js";
 import UI from "../UI.js";
 

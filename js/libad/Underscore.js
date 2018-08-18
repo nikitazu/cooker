@@ -17,23 +17,6 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import assert from "assert";
-import m from "mocha";
-import Domain from "../Domain.js";
+import _ from "../lib/underscore-min-1.9.1.js";
 
-m.describe("Mocha", function() {
-  m.describe("#it()", function() {
-    m.it("should work", function() {
-      assert.equal("ok", "ok");
-    });
-  });
-});
-
-m.describe("Domain", () => {
-  const domain = new Domain();
-  m.describe("#consistencyCheck()", () => {
-    m.it("should pass", () => {
-      assert.equal(0, domain.consistencyCheck().length);
-    });
-  });
-});
+export default _;
