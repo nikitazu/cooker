@@ -37,6 +37,42 @@ cd $COOKER_PATH
 put index.html
 mkdir dist
 put dist/bundle.js
+mkdir img
+mkdir img/seed
+put img/seed/Bakeberry.m.png
+put img/seed/Cronerice.m.png
+put img/seed/Everdaisy.m.png
+put img/seed/Ichorpuff.m.png
+put img/seed/Queenbeet.m.png
+put img/seed/Whiskerbloom.m.png
+put img/seed/Baker's_wheat.m.png
+put img/seed/Crumbspore.m.png
+put img/seed/Fool's_bolete.m.png
+put img/seed/Juicy_queenbeet.m.png
+put img/seed/Shimmerlily.m.png
+put img/seed/White_Chocoroot.m.png
+put img/seed/Brown_mold.m.png
+put img/seed/Doughshroom.m.png
+put img/seed/Gildmillet.m.png
+put img/seed/Keenmoss.m.png
+put img/seed/Shriekbulb.m.png
+put img/seed/White_mildew.m.png
+put img/seed/Cheapcap.m.png
+put img/seed/Drowsyfern.m.png
+put img/seed/Glovemorel.m.png
+put img/seed/Meddleweed.m.png
+put img/seed/Thumbcorn.m.png
+put img/seed/Wrinklegill.m.png
+put img/seed/Chimerose.m.png
+put img/seed/Duketater.m.png
+put img/seed/Golden_clover.m.png
+put img/seed/Nursetulip.m.png
+put img/seed/Tidygrass.m.png
+put img/seed/Chocoroot.m.png
+put img/seed/Elderwort.m.png
+put img/seed/Green_rot.m.png
+put img/seed/Ordinary_Clover.m.png
+put img/seed/Wardlichen.m.png
 quit
 EOF
 
