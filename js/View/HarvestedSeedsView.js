@@ -23,7 +23,7 @@ import UI from "../UI.js";
 export default class HarvestedSeedsView {
   build(currentPlantIds, plantList) {
     const header  = UI.h2("Harvested seeds");
-    const section = UI.section("");
+    const section = UI.section("").addClass("nzg-harvested-seeds__list");
 
     UI.div(header).appendTo(section);
     this._buildCheckboxList(currentPlantIds, plantList).appendTo(section);
@@ -40,10 +40,15 @@ export default class HarvestedSeedsView {
   }
 
   _buildCheckbox(currentPlantIds, plant) {
+    const seedUrl = encodeURI(this._getSeedUrl(plant));
+    const seedImg = $("<img>").attr("src", seedUrl);
+    const nameSpan = $("<span>").text(plant.name);
+    const content = $().add(seedImg).add(nameSpan);
     return UI.checkbox(
       plant.id
-      , plant.name
-      , _.contains(currentPlantIds, plant.id));
+      , content
+      , _.contains(currentPlantIds, plant.id)
+    ).addClass("nzg-harvested-seeds__item");
   }
 
   _appendUncheckButton(section) {
@@ -54,5 +59,10 @@ export default class HarvestedSeedsView {
 
   _uncheckHarvestedSeeds(section) {
     section.find("input[type='checkbox']").prop("checked", false);
+  }
+
+  _getSeedUrl(plant) {
+    const name = plant.name.replace(" ", "_");
+    return `img/seed/${name}.m.png`;
   }
 }

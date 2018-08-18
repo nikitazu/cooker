@@ -1,6 +1,8 @@
 # The Cooker Project build automation file
 # ========================================
 
+IMAGES=$(shell find img/ -type f -name '*.s.png')
+CRUSHED_IMAGES=$(IMAGES:.s.png=.m.png)
 
 # Meta targets
 # ------------
@@ -19,16 +21,19 @@ again: clean dev
 deploy: prod
 	./deploy.sh
 
-prod:
+prod: $(CRUSHED_IMAGES)
 	npx webpack --mode production
 
 test:
 	npx webpack --mode development --config webpack.config.test.js
 	npm test
 
-dev:
+dev: $(CRUSHED_IMAGES)
 	npx webpack --mode development
 
 clean:
 	rm -rf dist
+
+%.m.png : %.s.png
+	pngcrush -fix -l9 -m0 -rem text "$<" "$@"
 

@@ -1,7 +1,7 @@
 {
   "wheat": {
     "id": "wheat",
-    "name": "Baker's Wheat",
+    "name": "Baker's wheat",
     "mutations": [
       {
         "parents": [
@@ -130,7 +130,7 @@
   },
   "gclover": {
     "id": "gclover",
-    "name": "Golden Clover",
+    "name": "Golden clover",
     "mutations": [
       {
         "parents": [
@@ -487,7 +487,7 @@
   },
   "jqb": {
     "id": "jqb",
-    "name": "Juicy Queenbeet",
+    "name": "Juicy queenbeet",
     "mutations": [
       {
         "parents": [
@@ -625,7 +625,7 @@
   },
   "mildew": {
     "id": "mildew",
-    "name": "White Mildew",
+    "name": "White mildew",
     "mutations": [
       {
         "parents": [
@@ -645,7 +645,7 @@
   },
   "mold": {
     "id": "mold",
-    "name": "Brown Mold",
+    "name": "Brown mold",
     "mutations": [
       {
         "parents": [
@@ -784,7 +784,7 @@
   },
   "fool": {
     "id": "fool",
-    "name": "Fool's Bolete",
+    "name": "Fool's bolete",
     "mutations": [
       {
         "parents": [
@@ -822,7 +822,7 @@
   },
   "rot": {
     "id": "rot",
-    "name": "Green Rot",
+    "name": "Green rot",
     "mutations": [
       {
         "parents": [
