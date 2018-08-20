@@ -19,14 +19,27 @@
 
 import assert from "assert";
 import m from "mocha";
-import "./DependencyTreeTest.js";
-import "./DomainTest.js";
-import "./FuncTest.js";
+import DependencyTree from "../DependencyTree.js";
 
-m.describe("Mocha", function() {
-  m.describe("#it()", function() {
-    m.it("should work", function() {
-      assert.equal("ok", "ok");
+m.describe("DependencyTree", () => {
+  const dtree = new DependencyTree();
+
+  m.describe("#build()", () => {
+    m.it("should build tree", () => {
+      const result = [
+        ["wheat", "weed"]
+        , ["corn", "berry", "mold", "spore"]
+        , ["rice", "choco", "mildew", "room", "glove", "wrink"]
+        , ["millet", "elder", "wchoco", "lich", "qb", "bulb"]
+        , ["clover", "gclover", "jqb", "duke", "grass", "puff"]
+        , ["lily", "daisy", "rot"]
+        , ["whisker", "moss", "cap", "fool"]
+        , ["rose", "tulip", "drow"]
+      ];
+      assert.equal(
+        JSON.stringify(dtree.build())
+        , JSON.stringify(result)
+      );
     });
   });
 });
