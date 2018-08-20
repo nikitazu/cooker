@@ -21,13 +21,14 @@ import _ from "./libad/Underscore.js";
 import * as ConstantData from "./ConstantData.js";
 
 export default class Controller {
-  constructor(logger, store, domain, view) {
+  constructor(logger, store, domain, dependencyTree, view) {
     logger.log("Controller.init");
-    this._logger    = logger;
-    this._store     = store;
-    this._domain    = domain;
-    this._view      = view;
-    this._doc       = $(document);
+    this._logger         = logger;
+    this._store          = store;
+    this._domain         = domain;
+    this._dependencyTree = dependencyTree;
+    this._view           = view;
+    this._doc            = $(document);
   }
 
   init() {
@@ -37,6 +38,7 @@ export default class Controller {
       , currentPlantIds
       , this._domain.findRecommentedPlants(currentPlantIds)
       , this._domain.consistencyCheck()
+      , this._dependencyTree.build()
     );
     this._doc.on(
       "change"

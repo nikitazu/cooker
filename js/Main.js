@@ -19,6 +19,7 @@
 
 import Controller from "./Controller.js";
 import DataStore from "./DataStore.js";
+import DependencyTree from "./DependencyTree.js";
 import Domain from "./Domain.js";
 import Logger from "./Logger.js";
 import View from "./View.js";
@@ -38,6 +39,7 @@ function main() {
     logger
     , new DataStore(localStorage, logger)
     , new Domain()
+    , new DependencyTree()
     , new View(UI, logger, app)
   );
   controller.init();
