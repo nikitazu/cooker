@@ -17,10 +17,10 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-export function mapFilter(list, func) {
+export function mapFilter(xs, f) {
   const result = [];
-  for (let x of list) {
-    const tmp = func(x);
+  for (let x of xs) {
+    const tmp = f(x);
     if (tmp) {
       result.push(tmp);
     }

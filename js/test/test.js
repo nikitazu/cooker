@@ -19,8 +19,8 @@
 
 import assert from "assert";
 import m from "mocha";
-import "./FuncTest.js";
 import "./DomainTest.js";
+import "./FuncTest.js";
 
 m.describe("Mocha", function() {
   m.describe("#it()", function() {
