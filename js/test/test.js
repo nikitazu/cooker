@@ -19,6 +19,7 @@
 
 import assert from "assert";
 import m from "mocha";
+import "./DependencyTreeTest.js";
 import "./DomainTest.js";
 import "./FuncTest.js";
 

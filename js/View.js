@@ -17,6 +17,7 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import DependencyTreeView from "./View/DependencyTreeView.js";
 import GardenersCompendiumView from "./View/GardenersCompendiumView.js";
 import HarvestedSeedsView from "./View/HarvestedSeedsView.js";
 import MutationListView from "./View/MutationListView.js";
@@ -31,12 +32,14 @@ export default class View {
     this._ui = UI;
     this._logger = logger;
     this._container = container;
+    const mutationListView = new MutationListView();
     const seedImageView = new SeedImageView();
     const plantView = new PlantView(seedImageView);
     const plantListView = new PlantListView(
       plantView
-      , new MutationListView()
+      , mutationListView
     );
+    this._dependencyTreeView = new DependencyTreeView(plantView);
     this._gardenersCompendiumView = new GardenersCompendiumView(plantListView);
     this._harvestedSeedsView = new HarvestedSeedsView(plantView);
     this._recommendedPlantsView = new RecommendedPlantsView(plantListView);
@@ -49,6 +52,7 @@ export default class View {
     , currentPlantIds
     , recommendedPlants
     , consistencyErrors
+    , dependencyTree
   ) {
     this._logger.log("View.build");
 
@@ -60,14 +64,16 @@ export default class View {
     this._add(this._ui.h1("Happy Cooker"));
     this._add(this._ui.div().addClass("nzc-sidebyside"))
       .append(this._gardenersCompendiumView.build(plantList))
-      .append(this._harvestedSeedsView.build(currentPlantIds, plantList))
-      .append(this._recommendedPlantsView.build(recommendedPlants));
+      //.append(this._harvestedSeedsView.build(currentPlantIds, plantList))
+      //.append(this._recommendedPlantsView.build(recommendedPlants))
+      .append(this._dependencyTreeView.build(dependencyTree, recommendedPlants));
 
     this._logger.log("View.build done");
   }
 
-  update(recommendedPlants) {
-    this._recommendedPlantsView.update(recommendedPlants);
+  update(dependencyTree, recommendedPlants) {
+    //this._recommendedPlantsView.update(recommendedPlants);
+    this._dependencyTreeView.update(dependencyTree, recommendedPlants);
   }
 
   toggleGardenersCompendium() {
