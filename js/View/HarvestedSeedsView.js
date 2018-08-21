@@ -37,9 +37,8 @@ export default class HarvestedSeedsView {
   }
 
   _buildCheckboxList(currentPlantIds, plantList) {
-    const sortedPlantList = _.sortBy(plantList, p => p.name);
     return UI.unorderedListWithItems(
-      sortedPlantList.map(p => this._buildCheckbox(currentPlantIds, p))
+      plantList.map(p => this._buildCheckbox(currentPlantIds, p))
     );
   }
 
