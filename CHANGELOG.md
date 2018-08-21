@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Undo alphabetical sort in "Harvested seeds" section.
 - More aggressive png crushing.
+- Scaledown all plant icons to prevent scrolling.
 
 ## [0.0.8] - 2018-08-18
 ### Added
