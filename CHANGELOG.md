@@ -5,14 +5,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Undo alphabetical sort in "Harvested seeds" section.
 
 ## [0.0.8] - 2018-08-18
+### Added
 - Add plant seed images (minified with pngcrush).
 - Blue border on hovering "Harvested seed" items.
 - Deploy script now uploads images.
 
 ## [0.0.7] - 2018-08-18
+### Added
 - Unit tests.
+
+### Changed
 - Lots of refactoring.
 - CodeClimante's "A" status achieved.
 
