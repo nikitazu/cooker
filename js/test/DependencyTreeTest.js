@@ -24,20 +24,41 @@ import DependencyTree from "../DependencyTree.js";
 m.describe("DependencyTree", () => {
   const dtree = new DependencyTree();
 
-  m.describe("#build()", () => {
+  m.describe("#build(currentPlantIds, recommendedPlantIds)", () => {
+    m.it("should build initial tree", () => {
+      const result = [
+        { "wheat": "h", "weed": "a" }
+        , { "corn": "a", "berry": "a", "mold": "", "spore": "" }
+        , { "rice": "", "choco": "", "mildew": "", "room": "", "glove": "", "wrink": "" }
+        , { "millet": "", "elder": "", "wchoco": "", "lich": "", "qb": "", "bulb": "" }
+        , { "clover": "", "gclover": "", "jqb": "", "duke": "", "grass": "", "puff": "" }
+        , { "lily": "", "daisy": "", "rot": "" }
+        , { "whisker": "", "moss": "", "cap": "", "fool": "" }
+        , { "rose": "", "tulip": "", "drow": "" }
+      ];
+      const currentPlantIds = ["wheat"];
+      const recommendedPlantIds = ["corn", "berry"];
+      assert.equal(
+        JSON.stringify(dtree.build(currentPlantIds, recommendedPlantIds))
+        , JSON.stringify(result)
+      );
+    });
+
     m.it("should build tree", () => {
       const result = [
-        ["wheat", "weed"]
-        , ["corn", "berry", "mold", "spore"]
-        , ["rice", "choco", "mildew", "room", "glove", "wrink"]
-        , ["millet", "elder", "wchoco", "lich", "qb", "bulb"]
-        , ["clover", "gclover", "jqb", "duke", "grass", "puff"]
-        , ["lily", "daisy", "rot"]
-        , ["whisker", "moss", "cap", "fool"]
-        , ["rose", "tulip", "drow"]
+        { "wheat": "h", "weed": "h" }
+        , { "corn": "h", "berry": "a", "mold": "a", "spore": "a" }
+        , { "rice": "a", "choco": "", "mildew": "", "room": "", "glove": "", "wrink": "" }
+        , { "millet": "", "elder": "", "wchoco": "", "lich": "", "qb": "", "bulb": "" }
+        , { "clover": "", "gclover": "", "jqb": "", "duke": "", "grass": "", "puff": "" }
+        , { "lily": "", "daisy": "", "rot": "" }
+        , { "whisker": "", "moss": "", "cap": "", "fool": "" }
+        , { "rose": "", "tulip": "", "drow": "" }
       ];
+      const currentPlantIds = ["wheat", "weed", "corn"];
+      const recommendedPlantIds = ["berry", "mold", "spore", "rice"];
       assert.equal(
-        JSON.stringify(dtree.build())
+        JSON.stringify(dtree.build(currentPlantIds, recommendedPlantIds))
         , JSON.stringify(result)
       );
     });

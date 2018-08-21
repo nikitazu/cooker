@@ -60,7 +60,7 @@ export default class View {
 
     this._add(this._ui.h1("Happy Cooker"));
     this._add(this._ui.div().addClass("nzc-sidebyside"))
-      .append(this._gardenersCompendiumView.build(plantList))
+      //.append(this._gardenersCompendiumView.build(plantList))
       //.append(this._harvestedSeedsView.build(currentPlantIds, plantList))
       //.append(this._recommendedPlantsView.build(recommendedPlants))
       .append(this._dependencyTreeView.build(dependencyTree));
@@ -68,8 +68,9 @@ export default class View {
     this._logger.log("View.build done");
   }
 
-  update(recommendedPlants) {
-    this._recommendedPlantsView.update(recommendedPlants);
+  update(dependencyTree) {
+    //this._recommendedPlantsView.update(recommendedPlants);
+    this._dependencyTreeView.update(dependencyTree);
   }
 
   _add(element) {

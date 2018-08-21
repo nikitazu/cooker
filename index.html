@@ -59,14 +59,36 @@ Get Cooker source code at: <a href="https://github.com/nikitazu/cooker" target="
 .nzc-sidebyside > section+section {
   margin-left: 32px;
 }
+.nzc-dependency-tree__level-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 .nzg-plant {
   display: flex;
   align-items: center;
+  border: 1px solid #BBBBBB;
+  border-radius: 4px;
 }
 .nzg-plant > .nzg-plant__image {
-  opacity: .6;
-  width: 24px;
-  height: 24px;
+  opacity: .2;
+}
+.nzg-harvested-seeds__list .nzg-plant {
+  margin: 8px;
+  width: 150px;
+  height: 64px
+}
+.nzg-harvested-seeds__list .nzg-plant.nzg-harvested-seeds__a {
+  border-color: #AACCEE;
+}
+.nzg-harvested-seeds__list .nzg-plant.nzg-harvested-seeds__a > .nzg-plant__image {
+  opacity: .7;
+}
+.nzg-harvested-seeds__list .nzg-plant.nzg-harvested-seeds__h {
+  border-color: #AACCEE;
+}
+.nzg-harvested-seeds__list .nzg-plant.nzg-harvested-seeds__h > .nzg-plant__image {
+  opacity: .7;
 }
 .nzg-harvested-seeds__list .nzg-harvested-seeds__item {
   display: flex;
@@ -85,9 +107,6 @@ Get Cooker source code at: <a href="https://github.com/nikitazu/cooker" target="
 .nzg-harvested-seeds__list.nzg-harvested-seeds__list_horizontal ul {
   display: flex;
   align-items: left;
-}
-.nzg-harvested-seeds__list.nzg-harvested-seeds__list_horizontal ul>li {
-  width: 150px;
 }
 </style>
 </body>

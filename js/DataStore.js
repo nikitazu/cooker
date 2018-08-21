@@ -17,6 +17,8 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import * as ConstantData from "./ConstantData.js";
+
 export default class DataStore {
   constructor(storage, log) {
     this._log = log;
@@ -34,6 +36,12 @@ export default class DataStore {
   }
 
   saveCurrentPlants(plantIds) {
+    for (let id of plantIds) {
+      if (!ConstantData.plantDict.hasOwnProperty(id)) {
+        this._log.log(`DataStore.saveCurrentPlants: incorrect plant id ${id}`);
+        throw Error(`Incorrect plant id=${id}`);
+      }
+    }
     this._setItem("currentPlantIds", plantIds);
   }
 

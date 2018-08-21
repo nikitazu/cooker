@@ -31,33 +31,47 @@ export default class DependencyTree {
    *   , et cetera
    *   ]
    */
-  build() {
+  build(currentPlantIds, recommendedPlantIds) {
     const result = [];
     const rootPlantIds = this._getRoot();
     result.push(rootPlantIds);
     let rootChildren = this._getChildren(result, rootPlantIds);
     result.push(rootChildren);
-    while (rootChildren.length > 0) {
-      rootChildren = this._getChildren(result, rootChildren);
-      if (rootChildren.length > 0) {
+    while (_.keys(rootChildren).length > 0) {
+      rootChildren = this._getChildren(result, _.keys(rootChildren));
+      if (_.keys(rootChildren).length > 0) {
         result.push(rootChildren);
+      }
+    }
+    for (let level of result) {
+      for (let id of _.keys(level)) {
+        if (_.contains(currentPlantIds, id)) {
+          level[id] = "h";
+        } else if (_.contains(recommendedPlantIds, id)) {
+          level[id] = "a";
+        }
       }
     }
     return result;
   }
 
   _getRoot() {
-    return ["wheat", "weed"];
+    return { "wheat": "h", "weed": "a" };
   }
 
   _getChildren(collectedTree, plantIds) {
-    const collectedIds = _.flatten(collectedTree);
+    const collectedIds = _.flatten(collectedTree.map(level => _.keys(level)));
     return _.values(ConstantData.plantDict)
       .filter(plant =>
         !_.contains(plantIds, plant.id)
         && !_.contains(collectedIds, plant.id)
         && plant.mutations
           .some(m => m.parents.every(p => p.id === "any" || p.id === plant.id && p.countIf === "<=" || _.contains(collectedIds, p.id))))
-      .map(plant => plant.id);
+      .map(plant => plant.id)
+      .reduce((result, id) => {
+        const obj = {};
+        obj[id] = "";
+        return _.extend(result, obj);
+      }, {});
   }
 }

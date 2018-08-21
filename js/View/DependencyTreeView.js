@@ -21,6 +21,8 @@ import _ from "../libad/Underscore.js";
 import * as ConstantData from "../ConstantData.js";
 import UI from "../UI.js";
 
+const treeContentId = "dependencyTreeContent";
+
 export default class DependencyTreeView {
   constructor(plantView) {
     this._plantView = plantView;
@@ -36,21 +38,44 @@ export default class DependencyTreeView {
     return section;
   }
 
-  _buildLevelList(tree) {
-    return UI.unorderedListWithItems(
-      tree.map(_.bind(this._buildLevel, this))
-    );
+  update(tree) {
+    $(`#${treeContentId}`).replaceWith(this._buildLevelList(tree));
   }
 
-  _buildLevel(plantIds) {
+  _buildLevelList(tree) {
+    const levels = tree.map(_.bind(this._buildLevel, this));
+    return UI.unorderedListWithItems(levels)
+      .addClass("nzc-dependency-tree__level-list")
+      .attr("id", treeContentId);
+  }
+
+  _buildLevel(level) {
     return UI.div()
       .addClass("nzg-harvested-seeds__list nzg-harvested-seeds__list_horizontal")
       .append(UI.unorderedListWithItems(
-        plantIds.map(_.bind(this._buildItem, this))
+        _.keys(level).map(_.bind(this._buildItem, this, level))
       ));
   }
 
-  _buildItem(plantId) {
-    return this._plantView.build(ConstantData.plantDict[plantId]);
+  _buildItem(level, plantId) {
+    const status = level[plantId];
+    let statusClass;
+    switch (status)
+    {
+    case "a":
+      statusClass = "nzg-harvested-seeds__a";
+      break;
+    case "h":
+      statusClass = "nzg-harvested-seeds__h";
+      break;
+    default:
+      statusClass = "";
+      break;
+    }
+    const checkbox = UI.checkbox(plantId, "", status === "h");
+    return this._plantView
+      .build(ConstantData.plantDict[plantId])
+      .addClass(statusClass)
+      .append(checkbox);
   }
 }
