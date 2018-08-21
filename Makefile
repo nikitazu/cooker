@@ -3,6 +3,7 @@
 
 IMAGES=$(shell find img/ -type f -name '*.s.png')
 CRUSHED_IMAGES=$(IMAGES:.s.png=.m.png)
+PNGCRUSH_FLAGS=-fix -l9 -m0 -rem alla -brute
 
 # Meta targets
 # ------------
@@ -35,5 +36,5 @@ clean:
 	rm -rf dist
 
 %.m.png : %.s.png
-	pngcrush -fix -l9 -m0 -rem text "$<" "$@"
+	pngcrush $(PNGCRUSH_FLAGS) "$<" "$@"
 
