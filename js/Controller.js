@@ -56,6 +56,7 @@ export default class Controller {
     const recommendedPlants = this._domain.findRecommentedPlants(currentPlantIds);
     this._view.update(
       this._dependencyTree.build(currentPlantIds, recommendedPlants.map(p => p.id))
+      , recommendedPlants
     );
     this._store.saveCurrentPlants(currentPlantIds);
   }

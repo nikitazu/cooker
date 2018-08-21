@@ -32,11 +32,12 @@ export default class View {
     this._ui = UI;
     this._logger = logger;
     this._container = container;
+    const mutationListView = new MutationListView();
     const seedImageView = new SeedImageView();
     const plantView = new PlantView(seedImageView);
     const plantListView = new PlantListView(
       plantView
-      , new MutationListView()
+      , mutationListView
     );
     this._dependencyTreeView = new DependencyTreeView(plantView);
     this._gardenersCompendiumView = new GardenersCompendiumView(plantListView);
@@ -63,14 +64,14 @@ export default class View {
       //.append(this._gardenersCompendiumView.build(plantList))
       //.append(this._harvestedSeedsView.build(currentPlantIds, plantList))
       //.append(this._recommendedPlantsView.build(recommendedPlants))
-      .append(this._dependencyTreeView.build(dependencyTree));
+      .append(this._dependencyTreeView.build(dependencyTree, recommendedPlants));
 
     this._logger.log("View.build done");
   }
 
-  update(dependencyTree) {
+  update(dependencyTree, recommendedPlants) {
     //this._recommendedPlantsView.update(recommendedPlants);
-    this._dependencyTreeView.update(dependencyTree);
+    this._dependencyTreeView.update(dependencyTree, recommendedPlants);
   }
 
   _add(element) {

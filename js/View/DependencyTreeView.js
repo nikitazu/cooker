@@ -28,36 +28,37 @@ export default class DependencyTreeView {
     this._plantView = plantView;
   }
 
-  build(tree) {
+  build(tree, recommendedPlants) {
     const header  = UI.h2("Dependency tree");
     const section = UI.section("");
 
     UI.div(header).appendTo(section);
-    this._buildLevelList(tree).appendTo(section);
+    this._buildLevelList(tree, recommendedPlants).appendTo(section);
 
     return section;
   }
 
-  update(tree) {
-    $(`#${treeContentId}`).replaceWith(this._buildLevelList(tree));
+  update(tree, recommendedPlants) {
+    const newList = this._buildLevelList(tree, recommendedPlants);
+    $(`#${treeContentId}`).replaceWith(newList);
   }
 
-  _buildLevelList(tree) {
-    const levels = tree.map(_.bind(this._buildLevel, this));
+  _buildLevelList(tree, recommendedPlants) {
+    const levels = tree.map(_.bind(this._buildLevel, this, recommendedPlants));
     return UI.unorderedListWithItems(levels)
       .addClass("nzc-dependency-tree__level-list")
       .attr("id", treeContentId);
   }
 
-  _buildLevel(level) {
+  _buildLevel(recommendedPlants, level) {
     return UI.div()
       .addClass("nzg-harvested-seeds__list nzg-harvested-seeds__list_horizontal")
       .append(UI.unorderedListWithItems(
-        _.keys(level).map(_.bind(this._buildItem, this, level))
+        _.keys(level).map(_.bind(this._buildItem, this, recommendedPlants, level))
       ));
   }
 
-  _buildItem(level, plantId) {
+  _buildItem(recommendedPlants, level, plantId) {
     const status = level[plantId];
     let statusClass;
     switch (status)
@@ -72,10 +73,48 @@ export default class DependencyTreeView {
       statusClass = "";
       break;
     }
+    const plant = ConstantData.plantDict[plantId];
     const checkbox = UI.checkbox(plantId, "", status === "h");
-    return this._plantView
-      .build(ConstantData.plantDict[plantId])
+    const propability = _.uniq(plant.mutations.map(m => m.propability)).join("/");
+    const allMut = this._allMutations(plant);
+    const recMut = this._recommendedMutations(recommendedPlants, plant);
+    const title = recMut.length > 0
+      ? ("Recommended mutations:\n" + recMut)
+      : ("All mutations:\n" + allMut);
+    const plantView = this._plantView
+      .build(plant)
       .addClass(statusClass)
       .append(checkbox);
+    return UI.div()
+      .addClass("nzc-dependency-tree__plant")
+      .attr("title", title)
+      .append(UI.div(plantView))
+      .append(UI.div(UI.span(propability)));
+  }
+
+  _allMutations(plant) {
+    return plant
+      .mutations
+      .map(_.bind(this._mutation, this))
+      .join("\n");
+  }
+
+  _recommendedMutations(recommendedPlants, plant) {
+    return recommendedPlants
+      .filter(rp => rp.id === plant.id)
+      .map(rp => rp.mutations.map(_.bind(this._mutation, this)).join("\n"))
+      .join("\n");
+  }
+
+  // TODO: refactor - copy-pasted from MutationListView
+  _mutation(m) {
+    return m.parents
+      .map(_.bind(this._mutationParent, this))
+      .join(" + ") + ` = ${m.propability}`;
+  }
+
+  _mutationParent(p) {
+    const name = p.id === "any" ? "any" : ConstantData.plantDict[p.id].name;
+    return p.count === 1 ? name : `${name} * ${p.count}`;
   }
 }
