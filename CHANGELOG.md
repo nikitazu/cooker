@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.0.10] - 2018-08-22
+### Changed
+- Split the list of checkboxes in "Harvested seeds" section.
+
 ## [0.0.9] - 2018-08-21
 ### Changed
 - Undo alphabetical sort in "Harvested seeds" section.
