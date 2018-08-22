@@ -38,10 +38,18 @@ export default class Controller {
       , this._domain.findRecommentedPlants(currentPlantIds)
       , this._domain.consistencyCheck()
     );
+    if (!this._store.loadGardenersCompendiumSectionVisibility()) {
+      this._view.toggleGardenersCompendium();
+    }
     this._doc.on(
       "change"
       , "input[type='checkbox']"
       , _.bind(this._onPlantCheckboxChange, this)
+    );
+    this._doc.on(
+      "click"
+      , `#${this._view.gardenersCompendiumSectionHeaderId} >h2`
+      , _.bind(this._onGardenersCompendiumSectionHeaderClick, this)
     );
   }
 
@@ -60,6 +68,14 @@ export default class Controller {
       .toArray()
       .filter(cb => $(cb).is(":checked"))
       .map(cb => $(cb).attr("name"));
+  }
+
+  _onGardenersCompendiumSectionHeaderClick() {
+    this._logger.log("Controller.onGardenersCompendiumSectionHeaderClick");
+    this._view.toggleGardenersCompendium();
+    this._store.saveGardenersCompendiumSectionVisibility(
+      !this._store.loadGardenersCompendiumSectionVisibility()
+    );
   }
 }
 

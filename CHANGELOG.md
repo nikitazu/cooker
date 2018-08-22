@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
 - "Gardener's Compendium" section made togglable.
+- "Gardener's Compendium" section visibility persists.
 
 
 ## [0.0.10] - 2018-08-22

@@ -40,6 +40,8 @@ export default class View {
     this._gardenersCompendiumView = new GardenersCompendiumView(plantListView);
     this._harvestedSeedsView = new HarvestedSeedsView(plantView);
     this._recommendedPlantsView = new RecommendedPlantsView(plantListView);
+
+    this.gardenersCompendiumSectionHeaderId = this._gardenersCompendiumView.sectionHeaderId;
   }
 
   build(
@@ -66,6 +68,10 @@ export default class View {
 
   update(recommendedPlants) {
     this._recommendedPlantsView.update(recommendedPlants);
+  }
+
+  toggleGardenersCompendium() {
+    this._gardenersCompendiumView.toggleSection();
   }
 
   _add(element) {

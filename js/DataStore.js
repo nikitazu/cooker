@@ -37,6 +37,14 @@ export default class DataStore {
     this._setItem("currentPlantIds", plantIds);
   }
 
+  loadGardenersCompendiumSectionVisibility() {
+    return this._getItem("gardenersCompendiumSectionVisibility") === true;
+  }
+
+  saveGardenersCompendiumSectionVisibility(isVisible) {
+    this._setItem("gardenersCompendiumSectionVisibility", isVisible === true);
+  }
+
   _getItem(key) {
     this._log.log(`DataStore.getItem ${key}`);
     if (this._storage) {
