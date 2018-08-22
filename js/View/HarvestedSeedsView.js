@@ -30,7 +30,13 @@ export default class HarvestedSeedsView {
     const section = UI.section("").addClass("nzg-harvested-seeds__list");
 
     UI.div(header).appendTo(section);
-    this._buildCheckboxList(currentPlantIds, plantList).appendTo(section);
+
+    const middleIndex = plantList.length / 2;
+    const leftPlantList = plantList.slice(0, middleIndex);
+    const rightPlantList = plantList.slice(middleIndex);
+    const listContainer = UI.div().addClass("nzc-harvested-seeds__list-container").appendTo(section);
+    this._buildCheckboxList(currentPlantIds, leftPlantList).appendTo(listContainer);
+    this._buildCheckboxList(currentPlantIds, rightPlantList).appendTo(listContainer);
     this._appendUncheckButton(section);
 
     return section;
