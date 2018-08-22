@@ -31,11 +31,12 @@ export default class Controller {
   }
 
   init() {
-    const currentPlantIds = this._store.loadCurrentPlants() || ["wheat"];
+    const currentPlantIds = this._plantIdsOrDefault(this._store.loadCurrentPlants());
+    const recommendedPlants = this._domain.findRecommentedPlants(currentPlantIds);
     this._view.build(
       _.values(ConstantData.plantDict)
       , currentPlantIds
-      , this._domain.findRecommentedPlants(currentPlantIds)
+      , recommendedPlants
       , this._domain.consistencyCheck()
     );
     if (!this._store.loadGardenersCompendiumSectionVisibility()) {
@@ -55,9 +56,10 @@ export default class Controller {
 
   _onPlantCheckboxChange() {
     this._logger.log("Controller.onPlantCheckboxChange");
-    const currentPlantIds = this._getCurrentPlantIds();
+    const currentPlantIds = this._plantIdsOrDefault(this._getCurrentPlantIds());
+    const recommendedPlants = this._domain.findRecommentedPlants(currentPlantIds);
     this._view.update(
-      this._domain.findRecommentedPlants(currentPlantIds)
+      recommendedPlants
     );
     this._store.saveCurrentPlants(currentPlantIds);
   }
@@ -68,6 +70,10 @@ export default class Controller {
       .toArray()
       .filter(cb => $(cb).is(":checked"))
       .map(cb => $(cb).attr("name"));
+  }
+
+  _plantIdsOrDefault(ids) {
+    return ids && ids.length > 0 ? ids : ["wheat"];
   }
 
   _onGardenersCompendiumSectionHeaderClick() {

@@ -17,6 +17,8 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import * as ConstantData from "./ConstantData.js";
+
 const keys = {
   currentPlantIds: "currentPlantIds_8724b5ca58cfa7f666b106405b7dba26",
   gardenersCompendiumSectionVisibility: "gardenersCompendiumSectionVisibility_30d069eec8e8bc653ebe9af25b7dba65"
@@ -39,6 +41,12 @@ export default class DataStore {
   }
 
   saveCurrentPlants(plantIds) {
+    for (let id of plantIds) {
+      if (!ConstantData.plantDict.hasOwnProperty(id)) {
+        this._log.log(`DataStore.saveCurrentPlants: incorrect plant id ${id}`);
+        throw Error(`Incorrect plant id=${id}`);
+      }
+    }
     this._setItem(keys.currentPlantIds, plantIds);
   }
 
