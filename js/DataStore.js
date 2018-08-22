@@ -17,6 +17,11 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+const keys = {
+  currentPlantIds: "currentPlantIds_8724b5ca58cfa7f666b106405b7dba26",
+  gardenersCompendiumSectionVisibility: "gardenersCompendiumSectionVisibility_30d069eec8e8bc653ebe9af25b7dba65"
+};
+
 export default class DataStore {
   constructor(storage, log) {
     this._log = log;
@@ -30,19 +35,27 @@ export default class DataStore {
   }
 
   loadCurrentPlants() {
-    return this._getItem("currentPlantIds");
+    return this._getItem(keys.currentPlantIds);
   }
 
   saveCurrentPlants(plantIds) {
-    this._setItem("currentPlantIds", plantIds);
+    this._setItem(keys.currentPlantIds, plantIds);
   }
 
   loadGardenersCompendiumSectionVisibility() {
-    return this._getItem("gardenersCompendiumSectionVisibility") === true;
+    return this._getBool(keys.gardenersCompendiumSectionVisibility);
   }
 
   saveGardenersCompendiumSectionVisibility(isVisible) {
-    this._setItem("gardenersCompendiumSectionVisibility", isVisible === true);
+    this._setBool(keys.gardenersCompendiumSectionVisibility, isVisible);
+  }
+
+  _getBool(key) {
+    return this._getItem(key) == true;
+  }
+
+  _setBool(key, value) {
+    this._setItem(key, value === true);
   }
 
   _getItem(key) {
