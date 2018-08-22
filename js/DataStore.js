@@ -83,4 +83,3 @@ export default class DataStore {
     return json && JSON.parse(json).data || undefined;
   }
 }
-
