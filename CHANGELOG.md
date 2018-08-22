@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [0.0.11] - 2018-08-22
+## [0.1.0] - 2018-08-22
 ### Changed
 - "Gardener's Compendium" section made togglable.
 - "Gardener's Compendium" section visibility persists.
 - Ensure "Baker's wheat" is harvested by default.
+- Changed local storage key names.
+- Migration code for local storage.
 
 ## [0.0.10] - 2018-08-22
 ### Changed

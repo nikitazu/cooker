@@ -36,6 +36,18 @@ export default class DataStore {
     }
   }
 
+  // TODO remove after users updated to v0.1.0
+  migrateToV0_1_0() {
+    const x = this._getItem("currentPlantIds");
+    if (x && x !== "migrated_to_v0.1.0") {
+      this._log.log("DataStore.migrate to v0.1.0");
+      this.saveCurrentPlants(x);
+      this._setItem("currentPlantIds", "migrated_to_v0.1.0");
+      this._log.log("DataStore.migrate to v0.1.0 complete");
+    }
+  }
+  // TODO end remove
+
   loadCurrentPlants() {
     return this._getItem(keys.currentPlantIds);
   }

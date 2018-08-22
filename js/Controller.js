@@ -31,6 +31,7 @@ export default class Controller {
   }
 
   init() {
+    this._store.migrateToV0_1_0();
     const currentPlantIds = this._plantIdsOrDefault(this._store.loadCurrentPlants());
     const recommendedPlants = this._domain.findRecommentedPlants(currentPlantIds);
     this._view.build(
