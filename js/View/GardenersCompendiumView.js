@@ -17,7 +17,14 @@
  * along with Cooker.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import _ from "../libad/Underscore.js";
 import UI from "../UI.js";
+
+const sectionId = "gardenersCompendiumSection";
+const expandedHeaderText = "Gardener's Compendium";
+const expandedHeaderTooltip = "Click to hide this Gardener's Compendium";
+const collapsedHeaderText = "G..";
+const collapsedHeaderTooltip = "Click to open Gardener's Compendium";
 
 export default class GardenersCompendiumView {
   constructor(plantListView) {
@@ -25,9 +32,31 @@ export default class GardenersCompendiumView {
   }
 
   build(plantList) {
-    const header  = UI.h2("Gardener's Compendium");
+    const header = UI.h2(expandedHeaderText);
+    header.attr("title", expandedHeaderTooltip);
+    header.addClass("nzc-gardeners-compendium__header");
     const section = UI.section(header);
-    this._plantListView.build(plantList).appendTo(section);
+    section.attr("id", sectionId);
+    section.addClass("nzc-gardeners-compendium");
+    const list = this._plantListView.build(plantList).appendTo(section);
+    list.addClass("nzc-gardeners-compendium__list");
+    $(document).on(
+      "click"
+      , `#${sectionId} > h2`
+      , _.bind(this._toggleSection, this, header, list)
+    );
     return section;
+  }
+
+  _toggleSection(header, list) {
+    if (list.is(":visible")) {
+      header.text(collapsedHeaderText);
+      header.attr("title", collapsedHeaderTooltip);
+      list.hide();
+    } else {
+      header.text(expandedHeaderText);
+      header.attr("title", expandedHeaderTooltip);
+      list.show();
+    }
   }
 }
