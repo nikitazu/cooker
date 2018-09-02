@@ -57,4 +57,6 @@ UI.checkbox = (name, content, isChecked) =>
       .prop("checked", isChecked)
   ).append(content);
 
+UI.search = () => UI.input().attr("type", "search");
+
 UI.button = UI.elementMaker("button");

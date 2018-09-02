@@ -24,6 +24,7 @@ import PlantView from "./View/PlantView.js";
 import PlantListView from "./View/PlantListView.js";
 import RecommendedPlantsView from "./View/RecommendedPlantsView.js";
 import SeedImageView from "./View/SeedImageView.js";
+import SearchView from "./View/SearchView.js";
 
 export default class View {
   constructor(UI, logger, container) {
@@ -40,6 +41,7 @@ export default class View {
     this._gardenersCompendiumView = new GardenersCompendiumView(plantListView);
     this._harvestedSeedsView = new HarvestedSeedsView(plantView);
     this._recommendedPlantsView = new RecommendedPlantsView(plantListView);
+    this._searchView = new SearchView();
 
     this.gardenersCompendiumSectionHeaderId = this._gardenersCompendiumView.sectionHeaderId;
   }
@@ -58,6 +60,7 @@ export default class View {
     }
 
     this._add(this._ui.h1("Happy Cooker"));
+    this._add(this._searchView.build());
     this._add(this._ui.div().addClass("nzc-sidebyside"))
       .append(this._gardenersCompendiumView.build(plantList))
       .append(this._harvestedSeedsView.build(currentPlantIds, plantList))
@@ -72,6 +75,18 @@ export default class View {
 
   toggleGardenersCompendium() {
     this._gardenersCompendiumView.toggleSection();
+  }
+
+  setDefaultFocus() {
+    this._searchView.setDefaultFocus();
+  }
+
+  applyFilter(indices) {
+    this._harvestedSeedsView.applyFilter(indices);
+  }
+
+  resetFilter() {
+    this._harvestedSeedsView.resetFilter();
   }
 
   _add(element) {

@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.1] - 2018-09-02
+### Added
+- Search box added to the top of the document.
+- Typing text into search box would filter "Harvested Seeds".
+- Search is done in the following algorithm:
+  * search starts when more than one character is typed in;
+  * if less than one character is typed in the search is reset;
+  * seeds are searched in both checked and unchecked boxes;
+  * seed name could be equal or just containing search criteria;
+  * search criteria could be typed in lower case;
+  * search criteria could by typed ignoring non alphabetical characters.
+
 ## [0.1.0] - 2018-08-22
 ### Changed
 - "Gardener's Compendium" section made togglable.

@@ -20,6 +20,8 @@
 import _ from "../libad/Underscore.js";
 import UI from "../UI.js";
 
+const sectionId = "harvestedSeedsSection";
+
 export default class HarvestedSeedsView {
   constructor(plantView) {
     this._plantView = plantView;
@@ -27,7 +29,9 @@ export default class HarvestedSeedsView {
 
   build(currentPlantIds, plantList) {
     const header  = UI.h2("Harvested seeds");
-    const section = UI.section("").addClass("nzg-harvested-seeds__list");
+    const section = UI.section("");
+    section.addClass("nzg-harvested-seeds__list");
+    section.attr("id", sectionId);
 
     UI.div(header).appendTo(section);
 
@@ -40,6 +44,21 @@ export default class HarvestedSeedsView {
     this._appendUncheckButton(section);
 
     return section;
+  }
+
+  applyFilter(indices) {
+    const checkboxes = this._findCheckboxes(this._findSection());
+    checkboxes.filter((index, element) => {
+      const makeVisible = _.contains(indices, index);
+      this._closestListItem(element).toggle(makeVisible);
+    });
+  }
+
+  resetFilter() {
+    const checkboxes = this._findCheckboxes(this._findSection());
+    checkboxes.filter((_, element) => {
+      this._closestListItem(element).show();
+    });
   }
 
   _buildCheckboxList(currentPlantIds, plantList) {
@@ -63,6 +82,18 @@ export default class HarvestedSeedsView {
   }
 
   _uncheckHarvestedSeeds(section) {
-    section.find("input[type='checkbox']").prop("checked", false);
+    this._findCheckboxes(section).prop("checked", false);
+  }
+
+  _findCheckboxes(section) {
+    return section.find("input[type='checkbox']");
+  }
+
+  _findSection() {
+    return $(`#${sectionId}`);
+  }
+
+  _closestListItem(element) {
+    return $(element).closest("li");
   }
 }

@@ -49,6 +49,24 @@ export default class Domain {
     });
   }
 
+  fuzzyFind(list, criteria) {
+    const indices = [];
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      const itemLower = item.toLowerCase();
+      const itemStripped = item.replace(/[^A-Za-z]+/g, "");
+      const itemStrippedLower = itemStripped.toLowerCase();
+      if (item.indexOf(criteria) != -1
+          || itemLower.indexOf(criteria) != -1
+          || itemStripped.indexOf(criteria) != -1
+          || itemStrippedLower.indexOf(criteria) != -1)
+      {
+        indices.push(i);
+      }
+    }
+    return indices;
+  }
+
   _plantsExceptIds(ids) {
     const plants = _.values(ConstantData.plantDict);
     return _.reject(plants, _.bind(this._isGrownPlant, this, ids));

@@ -43,6 +43,12 @@ export default class Controller {
     if (!this._store.loadGardenersCompendiumSectionVisibility()) {
       this._view.toggleGardenersCompendium();
     }
+    this._view.setDefaultFocus();
+    this._doc.on(
+      "keyup"
+      , "input[type='search']"
+      , _.bind(this._onSearch, this)
+    );
     this._doc.on(
       "change"
       , "input[type='checkbox']"
@@ -53,6 +59,19 @@ export default class Controller {
       , `#${this._view.gardenersCompendiumSectionHeaderId} >h2`
       , _.bind(this._onGardenersCompendiumSectionHeaderClick, this)
     );
+  }
+
+  _onSearch(e) {
+    const input = $(e.currentTarget);
+    const criteria = input.val();
+    if (criteria.length > 1) {
+      const plants = _.values(ConstantData.plantDict);
+      const names = plants.map(p => p.name);
+      const indices = this._domain.fuzzyFind(names, criteria);
+      this._view.applyFilter(indices);
+    } else {
+      this._view.resetFilter();
+    }
   }
 
   _onPlantCheckboxChange() {
