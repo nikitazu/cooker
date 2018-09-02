@@ -1,6 +1,7 @@
 export default class FuzzySearch {
   constructor(list) {
     this._list = list;
+    this._lettersRe = new RegExp("[^A-Za-z]+", "g");
   }
 
   findIndices(criteria) {
@@ -17,7 +18,7 @@ export default class FuzzySearch {
       }
       else
       {
-        const itemStripped = item.replace(/[^A-Za-z]+/g, "");
+        const itemStripped = item.replace(this._lettersRe, "");
         const itemStrippedLower = itemStripped.toLowerCase();
         if (itemStripped.indexOf(criteria) != -1
             || itemStrippedLower.indexOf(criteria) != -1)
