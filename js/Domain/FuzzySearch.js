@@ -20,25 +20,46 @@ export default class FuzzySearch {
       loStrippedIndex[i] = strippedIndex[i].toLowerCase();
     }
     this._loStrippedIndex = loStrippedIndex;
+
+    const fuzzyIndex = new Array(list.length);
+    for (let i = 0; i < list.length; i++) {
+      const x = list[i].split(" ").map(a => a[0]).join("");
+      fuzzyIndex[i] = x;
+    }
+    this._fuzzyIndex = fuzzyIndex;
+
+    const loFuzzyIndex = new Array(list.length);
+    for (let i = 0; i < list.length; i++) {
+      loFuzzyIndex[i] = fuzzyIndex[i].toLowerCase();
+    }
+    this._loFuzzyIndex = loFuzzyIndex;
   }
 
   findIndices(criteria) {
     const list = this._list;
     const indices = [];
 
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++)
+    {
       if (list[i].indexOf(criteria) != -1
           || this._loIndex[i].indexOf(criteria) != -1)
       {
         indices.push(i);
+        continue;
       }
-      else
+
+      if (this._strippedIndex[i].indexOf(criteria) != -1
+          || this._loStrippedIndex[i].indexOf(criteria) != -1)
       {
-        if (this._strippedIndex[i].indexOf(criteria) != -1
-            || this._loStrippedIndex[i].indexOf(criteria) != -1)
-        {
-          indices.push(i);
-        }
+        indices.push(i);
+        continue;
+      }
+
+      if (this._fuzzyIndex[i].indexOf(criteria) != -1
+          || this._loFuzzyIndex[i].indexOf(criteria) != -1)
+      {
+        indices.push(i);
+        continue;
       }
     }
 

@@ -91,5 +91,21 @@ m.describe("FuzzySearch", () => {
         , JSON.stringify([0])
       );
     });
+
+    m.it("should find item by fuzzy", () => {
+      const result = search.findIndices("BW");
+      assert.equal(
+        JSON.stringify(result)
+        , JSON.stringify([0])
+      );
+    });
+
+    m.it("should find item by fuzzy (case insensitive)", () => {
+      const result = search.findIndices("bw");
+      assert.equal(
+        JSON.stringify(result)
+        , JSON.stringify([0])
+      );
+    });
   });
 });

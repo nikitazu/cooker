@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.2] - 2018-09-02
+### Changed
+- Search now supports fuzzy algorithm.
+
 ## [0.1.1] - 2018-09-02
 ### Added
 - Search box added to the top of the document.
