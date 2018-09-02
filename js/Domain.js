@@ -20,8 +20,14 @@
 import _ from "./libad/Underscore.js";
 import * as ConstantData from "./ConstantData.js";
 import * as Func from "./Func.js";
+import FuzzySearch from "./Domain/FuzzySearch.js";
 
 export default class Domain {
+  constructor() {
+    const names = _.values(ConstantData.plantDict).map(p => p.name);
+    this._search = new FuzzySearch(names);
+  }
+
   consistencyCheck() {
     const errors = [];
     _.each(ConstantData.plantDict, (plant, id) => {
@@ -49,22 +55,8 @@ export default class Domain {
     });
   }
 
-  fuzzyFind(list, criteria) {
-    const indices = [];
-    for (let i = 0; i < list.length; i++) {
-      const item = list[i];
-      const itemLower = item.toLowerCase();
-      const itemStripped = item.replace(/[^A-Za-z]+/g, "");
-      const itemStrippedLower = itemStripped.toLowerCase();
-      if (item.indexOf(criteria) != -1
-          || itemLower.indexOf(criteria) != -1
-          || itemStripped.indexOf(criteria) != -1
-          || itemStrippedLower.indexOf(criteria) != -1)
-      {
-        indices.push(i);
-      }
-    }
-    return indices;
+  findIndices(criteria) {
+    return this._search.findIndices(criteria);
   }
 
   _plantsExceptIds(ids) {

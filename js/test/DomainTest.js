@@ -21,9 +21,11 @@ import assert from "assert";
 import m from "mocha";
 import * as ConstantData from "../ConstantData.js";
 import Domain from "../Domain.js";
+import "./Domain/FuzzySearchTest.js";
 
 m.describe("Domain", () => {
   const domain = new Domain();
+
   m.describe("#consistencyCheck()", () => {
     m.it("should pass", () => {
       assert.equal(
@@ -55,81 +57,6 @@ m.describe("Domain", () => {
       assert.equal(
         JSON.stringify(result)
         , JSON.stringify([expectedCorn, expectedBerry])
-      );
-    });
-  });
-
-  m.describe("#fuzzyFind(list, criteria)", () => {
-    m.it("should find item by equality criteria", () => {
-      const list = ["Baker's Wheat", "Bakeberry", "Golden Clover"];
-      const result = domain.fuzzyFind(list, "Bakeberry");
-      assert.equal(
-        JSON.stringify(result)
-        , JSON.stringify([1])
-      );
-    });
-
-    m.it("should find item by equality (case insensitive)", () => {
-      const list = ["Baker's Wheat", "Bakeberry", "Golden Clover"];
-      const result = domain.fuzzyFind(list, "bakeberry");
-      assert.equal(
-        JSON.stringify(result)
-        , JSON.stringify([1])
-      );
-    });
-
-    m.it("should find item by containability", () => {
-      const list = ["Baker's Wheat", "Bakeberry", "Golden Clover"];
-      const result = domain.fuzzyFind(list, "Whe");
-      assert.equal(
-        JSON.stringify(result)
-        , JSON.stringify([0])
-      );
-    });
-
-    m.it("should find item by containability (case insensitive)", () => {
-      const list = ["Baker's Wheat", "Bakeberry", "Golden Clover"];
-      const result = domain.fuzzyFind(list, "whe");
-      assert.equal(
-        JSON.stringify(result)
-        , JSON.stringify([0])
-      );
-    });
-
-    m.it("should find item by stripped equality", () => {
-      const list = ["Baker's Wheat", "Bakeberry", "Golden Clover"];
-      const result = domain.fuzzyFind(list, "BakersWheat");
-      assert.equal(
-        JSON.stringify(result)
-        , JSON.stringify([0])
-      );
-    });
-
-    m.it("should find item by stripped equality (case insensitive)", () => {
-      const list = ["Baker's Wheat", "Bakeberry", "Golden Clover"];
-      const result = domain.fuzzyFind(list, "bakerswheat");
-      assert.equal(
-        JSON.stringify(result)
-        , JSON.stringify([0])
-      );
-    });
-
-    m.it("should find item by stripped containability", () => {
-      const list = ["Baker's Wheat", "Bakeberry", "Golden Clover"];
-      const result = domain.fuzzyFind(list, "BakersW");
-      assert.equal(
-        JSON.stringify(result)
-        , JSON.stringify([0])
-      );
-    });
-
-    m.it("should find item by stripped containability (case insensitive)", () => {
-      const list = ["Baker's Wheat", "Bakeberry", "Golden Clover"];
-      const result = domain.fuzzyFind(list, "bakersw");
-      // TODO decide if "Bakersw" or "bakersW" should match
-      assert.equal(
-        JSON.stringify(result)
-        , JSON.stringify([0])
       );
     });
   });

@@ -65,10 +65,7 @@ export default class Controller {
     const input = $(e.currentTarget);
     const criteria = input.val();
     if (criteria.length > 1) {
-      const plants = _.values(ConstantData.plantDict);
-      const names = plants.map(p => p.name);
-      const indices = this._domain.fuzzyFind(names, criteria);
-      this._view.applyFilter(indices);
+      this._view.applyFilter(this._domain.findIndices(criteria));
     } else {
       this._view.resetFilter();
     }
