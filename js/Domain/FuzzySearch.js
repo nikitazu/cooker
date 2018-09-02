@@ -1,7 +1,25 @@
 export default class FuzzySearch {
   constructor(list) {
     this._list = list;
-    this._lettersRe = new RegExp("[^A-Za-z]+", "g");
+
+    const loIndex = new Array(list.length);
+    for (let i = 0; i < list.length; i++) {
+      loIndex[i] = list[i].toLowerCase();
+    }
+    this._loIndex = loIndex;
+
+    const re = new RegExp("[^A-Za-z]+", "g");
+    const strippedIndex = new Array(list.length);
+    for (let i = 0; i < list.length; i++) {
+      strippedIndex[i] = list[i].replace(re, "");
+    }
+    this._strippedIndex = strippedIndex;
+
+    const loStrippedIndex = new Array(list.length);
+    for (let i = 0; i < list.length; i++) {
+      loStrippedIndex[i] = strippedIndex[i].toLowerCase();
+    }
+    this._loStrippedIndex = loStrippedIndex;
   }
 
   findIndices(criteria) {
@@ -9,19 +27,15 @@ export default class FuzzySearch {
     const indices = [];
 
     for (let i = 0; i < list.length; i++) {
-      const item = list[i];
-      const itemLower = item.toLowerCase();
-      if (item.indexOf(criteria) != -1
-          || itemLower.indexOf(criteria) != -1)
+      if (list[i].indexOf(criteria) != -1
+          || this._loIndex[i].indexOf(criteria) != -1)
       {
         indices.push(i);
       }
       else
       {
-        const itemStripped = item.replace(this._lettersRe, "");
-        const itemStrippedLower = itemStripped.toLowerCase();
-        if (itemStripped.indexOf(criteria) != -1
-            || itemStrippedLower.indexOf(criteria) != -1)
+        if (this._strippedIndex[i].indexOf(criteria) != -1
+            || this._loStrippedIndex[i].indexOf(criteria) != -1)
         {
           indices.push(i);
         }
